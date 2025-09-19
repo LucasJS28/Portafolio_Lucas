@@ -42,31 +42,20 @@
             --border-color: #e0e0e0;
             --shadow-color: rgba(0, 0, 0, 0.1);
         }
+        
+        body.modal-open {
+            overflow: hidden; /* Evita el scroll del fondo cuando el modal está abierto */
+        }
 
         /* --- Reseteo y Estilos Base --- */
-        * {
-            margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth;
-        }
-
-        ::selection {
-            background-color: var(--accent-color); color: var(--bg-light-dark);
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--dark-color);
-            color: var(--light-color);
-            overflow-x: hidden;
-            cursor: none;
-            transition: background-color 0.4s ease, color 0.4s ease;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        ::selection { background-color: var(--accent-color); color: var(--bg-light-dark); }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--dark-color); color: var(--light-color); overflow-x: hidden; cursor: none; transition: background-color 0.4s ease, color 0.4s ease; }
         
-        /* --- Scrollbar Personalizada --- */
+        /* --- Scrollbar y Cursor --- */
         body::-webkit-scrollbar { width: 10px; }
         body::-webkit-scrollbar-track { background: var(--dark-color); }
         body::-webkit-scrollbar-thumb { background-color: var(--accent-color); border-radius: 20px; border: 3px solid var(--dark-color); }
-        
-        /* --- Cursor Personalizado --- */
         .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; z-index: 9999; opacity: 1; transition: opacity 0.3s ease-in-out, background-color 0.3s ease, border-color 0.3s ease; }
         .cursor-dot { width: 8px; height: 8px; background-color: var(--accent-color); }
         .cursor-outline { width: 40px; height: 40px; border: 2px solid var(--accent-color); transition: width 0.3s ease, height 0.3s ease, transform 0.1s ease-out, background-color 0.3s ease, border-color 0.3s ease; }
@@ -89,8 +78,6 @@
         .nav-link:hover { color: var(--light-color); }
         .nav-link.active { color: var(--accent-color); }
         .nav-link.active::before { height: 100%; }
-
-        /* --- Botón de Tema --- */
         .theme-toggle { display: flex; align-items: center; justify-content: center; padding: 1.5rem 0; margin-top: auto; width: 100%; cursor: pointer; overflow: hidden; border: none; background: transparent; }
         .theme-toggle-container { position: relative; width: 1.8rem; height: 1.8rem; }
         .theme-toggle i { font-size: 1.8rem; color: var(--secondary-text); position: absolute; top: 0; left: 0; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease, color 0.3s ease; }
@@ -100,7 +87,7 @@
         .theme-toggle i.fa-moon { transform: translateY(0) scale(1); opacity: 1; }
         .theme-toggle.light-active i.fa-moon { transform: translateY(-150%) scale(0.8); opacity: 0; }
         
-        /* --- Menú Hamburguesa Móvil --- */
+        /* --- Menú Móvil --- */
         .hamburger-menu { display: none; position: fixed; top: 1rem; right: 1rem; background-color: var(--bg-light-dark); box-shadow: 0 0 15px var(--shadow-color); backdrop-filter: blur(5px); width: 50px; height: 50px; border-radius: 50%; justify-content: center; align-items: center; z-index: 1001; cursor: pointer; }
         .hamburger-icon { font-size: 1.5rem; color: var(--light-color); }
         .mobile-nav { position: fixed; top: 0; left: 100%; width: 100%; height: 100vh; background-color: rgba(10, 10, 10, 0.9); backdrop-filter: blur(10px); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: left 0.5s cubic-bezier(0.77, 0, 0.175, 1), background-color 0.4s ease; z-index: 1000; gap: 1rem; }
@@ -110,9 +97,8 @@
         .mobile-nav .nav-link:hover { color: var(--accent-color); }
         .mobile-nav .theme-toggle { width: auto; margin-top: 2rem; padding: 1rem; }
         
-        /* --- Secciones Generales --- */
+        /* --- Secciones y Títulos --- */
         section { min-height: 100vh; padding: 6rem 3rem; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-bottom: 1px solid var(--border-color); transition: border-color 0.4s ease; overflow: hidden; }
-        
         h1, h2 { margin-bottom: 2rem; font-size: 3rem; font-weight: 700; color: var(--light-color); }
         h2 { position: relative; padding-bottom: 1rem; }
         h2::after { content: ''; display: block; width: 80px; height: 4px; background-color: var(--accent-color); position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); border-radius: 2px; transition: background-color 0.3s ease; }
@@ -133,41 +119,71 @@
         .scroll-down { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: var(--accent-color); font-size: 2rem; animation: bounce 2s infinite; }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); } 40% { transform: translate(-50%, -15px); } 60% { transform: translate(-50%, -5px); } }
 
-        /* --- Proyectos, Certificados, Skills --- */
-        #proyectos, #experiencia { background-color: var(--bg-light-dark); }
+        /* --- Grillas Comunes --- */
         .projects-grid, .certificates-grid, .skills-grid { display: grid; width: 100%; margin-top: 2rem; }
         .projects-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1200px; }
         .certificates-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1200px; }
         
-        .project-card, .certificate-card, .skill-card-wrapper { 
-            background-color: var(--dark-color); 
-            border-radius: 10px;
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s ease;
-            position: relative; 
-        }
+        .project-card, .certificate-card, .skill-card-wrapper { background-color: var(--dark-color); border-radius: 10px; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s ease; position: relative; }
         body.light-mode .project-card, body.light-mode .certificate-card, body.light-mode .skill-card-wrapper { box-shadow: 0 4px 25px var(--shadow-color); }
-        
-        .project-card:hover, .certificate-card:hover, .skill-card-wrapper:hover { 
-            transform: translateY(-10px) scale(1.02); 
-            box-shadow: 0 12px 35px var(--shadow-color); 
-        }
-
+        .project-card:hover, .certificate-card:hover, .skill-card-wrapper:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 12px 35px var(--shadow-color); }
         .project-card::before, .certificate-card::before, .skill-card-wrapper::before { content: ''; position: absolute; inset: 0; border-radius: 10px; border: 2px solid transparent; background: radial-gradient(400px at var(--x) var(--y), var(--accent-color-transparent), transparent 80%) border-box; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; transition: opacity 0.3s; opacity: 0; }
         .project-card:hover::before, .certificate-card:hover::before, .skill-card-wrapper:hover::before { opacity: 1; }
+        
+        /* --- Proyectos --- */
+        #proyectos, #experiencia { background-color: var(--bg-light-dark); }
         .project-card video { width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0; }
         .project-content { padding: 1.5rem; text-align: left; }
         .project-content h3 { color: var(--accent-color); margin-bottom: 0.5rem; }
         .tech-tags { margin: 1rem 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .tech-tags span { background-color: var(--accent-color-transparent); color: var(--accent-color); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; display: inline-block; transition: all 0.3s ease; }
-        .tech-tags span:hover { transform: translateY(-3px); background-color: var(--accent-color); color: var(--bg-light-dark); box-shadow: 0 4px 10px rgba(0, 255, 204, 0.3); }
-        .project-buttons { margin-top: 1rem; }
+        .tech-tags span { background-color: var(--dark-color); color: var(--secondary-text); border: 1px solid var(--border-color); padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; }
+        .tech-tags span i { font-size: 1.2em; }
+        .tech-tags span:hover { transform: translateY(-3px); background-color: var(--accent-color-transparent); border-color: var(--accent-color); color: var(--light-color); box-shadow: 0 4px 12px rgba(0, 255, 204, 0.2); }
+        .project-buttons { margin-top: 1.5rem; }
         .project-buttons .btn { color: var(--light-color); background-color: transparent; border: 2px solid var(--accent-color); padding: 0.6rem 1.2rem; text-decoration: none; border-radius: 5px; margin-right: 0.5rem; transition: all 0.3s ease; font-weight: 600; }
         .project-buttons .btn:hover { background-color: var(--accent-color); color: var(--bg-light-dark); box-shadow: 0 0 15px var(--accent-color); }
-        .certificate-card { padding: 1.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 1rem;}
-        .certificate-card img { width: 100%; border-radius: 8px; box-shadow: 0 4px 15px var(--shadow-color); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .certificate-card:hover img { transform: scale(1.05); box-shadow: 0 8px 25px var(--shadow-color); }
-        .certificate-card p { font-size: 1rem; font-weight: 600; line-height: 1.4; color: var(--light-color); }
-
+        
+        /* --- Certificados (NUEVO ESTILO) --- */
+        .certificate-card {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            overflow: hidden;
+            cursor: zoom-in; /* Indica que es clickable */
+        }
+        .certificate-image-wrapper {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+        .certificate-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .certificate-card:hover img {
+            transform: scale(1.1);
+        }
+        .certificate-content {
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .certificate-content h4 {
+            color: var(--light-color); /* Cambiado a blanco para mejor lectura */
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.25rem;
+        }
+        .certificate-content p {
+            color: var(--secondary-text);
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
 
         /* --- Experiencia --- */
         .timeline { position: relative; max-width: 1200px; margin: 2rem auto 0; }
@@ -179,58 +195,76 @@
         .timeline-container.visible::after { border-color: var(--accent-color); }
         .right::after { left: -14px; }
         .timeline-content { padding: 20px 30px; background-color: var(--dark-color); position: relative; border-radius: 6px; transition: background-color 0.4s ease; text-align: left; }
+        .timeline-content h3 { color: var(--light-color); }
+        .timeline-content h4 { color: var(--accent-color); margin: 0.5rem 0; font-weight: 500; }
+        .timeline-content p.date { font-style: italic; color: var(--secondary-text); margin-bottom: 0.8rem; font-size: 0.9em; }
         body.light-mode .timeline-content { box-shadow: 0 4px 25px var(--shadow-color); }
         
         /* --- Habilidades --- */
-        .skills-grid {
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-        }
-        .skill-card-wrapper {
-           padding: 2rem 1rem;
-           display: flex;
-           flex-direction: column;
-           align-items: center;
-           justify-content: center;
-           gap: 1.5rem;
-           text-align: center;
-        }
-        @property --p {
-            syntax: '<number>';
-            inherits: true;
-            initial-value: 0;
-        }
-        .skill-progress-circle {
-            --p: 0; --b: 8px; --c: var(--accent-color); --w: 120px;
-            width: var(--w); aspect-ratio: 1; position: relative; display: inline-grid; place-content: center;
-        }
-        .skill-progress-circle::before {
-            content: ""; position: absolute; border-radius: 50%; inset: 0;
-            background: conic-gradient(var(--c) calc(var(--p) * 1%), var(--border-color) 0);
-            -webkit-mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b)));
-            mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b)));
-            transition: transform 1.2s cubic-bezier(0.5, 0, 0.2, 1);
-            transform: rotate(-90deg);
-        }
+        #habilidades h3 { font-size: 1.8rem; margin-top: 4rem; margin-bottom: 1.5rem; color: var(--light-color); }
+        .soft-skills-list { list-style: none; padding: 0; max-width: 800px; width: 100%; margin: 0 auto; text-align: center; }
+        .soft-skills-list li { display: inline-block; background-color: var(--bg-light-dark); color: var(--secondary-text); border: 1px solid var(--border-color); padding: 0.8rem 1.5rem; margin: 0.5rem; border-radius: 30px; font-weight: 500; transition: all 0.3s ease; }
+        .soft-skills-list li:hover { transform: translateY(-3px); border-color: var(--accent-color); color: var(--light-color); }
+        .skills-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 2rem; max-width: 1200px; }
+        .skill-card-wrapper { padding: 1.5rem 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; text-align: center; }
+        @property --p { syntax: '<number>'; inherits: true; initial-value: 0; }
+        .skill-progress-circle { --p: 0; --b: 8px; --c: var(--accent-color); --w: 100px; width: var(--w); aspect-ratio: 1; position: relative; display: inline-grid; place-content: center; }
+        .skill-progress-circle::before { content: ""; position: absolute; border-radius: 50%; inset: 0; background: conic-gradient(var(--c) calc(var(--p) * 1%), var(--border-color) 0); -webkit-mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b))); mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b))); transition: transform 1.2s cubic-bezier(0.5, 0, 0.2, 1); transform: rotate(-90deg); }
         .skill-card-wrapper.in-view .skill-progress-circle { animation: progress-animation 1.2s cubic-bezier(0.5, 0, 0.2, 1) forwards; }
         @keyframes progress-animation { to { --p: var(--target-p, 0); } }
-        .skill-progress-circle i { font-size: 3.5rem; color: var(--light-color); transition: color 0.3s ease, transform 0.3s ease; }
+        .skill-progress-circle i { font-size: 3rem; color: var(--light-color); transition: color 0.3s ease, transform 0.3s ease; }
         .skill-card-wrapper:hover .skill-progress-circle i { transform: scale(1.1); color: var(--accent-color); }
         .skill-card-wrapper:not(.in-view) .skill-progress-circle::before { transition: none; }
-        .skill-card-wrapper p { font-weight: 600; margin-top: 0; font-size: 1.1rem; color: var(--light-color); }
+        .skill-card-wrapper p { font-weight: 600; margin-top: 0; font-size: 1rem; color: var(--light-color); }
         
-        /* --- Footer --- */
+        /* --- Footer y Volver Arriba --- */
         footer { background-color: #000; padding: 3rem 2rem; text-align: center; width: 100%; transition: background-color 0.4s ease; border-bottom: none; }
         body.light-mode footer { background-color: #e0e0e0; }
         footer .footer-social-icons a { font-size: 1.8rem; margin: 0 1rem; color: var(--secondary-text); transition: color 0.3s ease; }
         body.light-mode footer .footer-social-icons a { color: var(--secondary-text); }
         footer .footer-social-icons a:hover { color: var(--accent-color); }
-        
-        /* --- Botón Volver Arriba --- */
         .back-to-top { position: fixed; bottom: 20px; right: 20px; background-color: var(--accent-color); color: var(--dark-color); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none; opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.4s ease; z-index: 1000; }
         .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
         
+        /* --- ESTILOS DEL MODAL (LIGHTBOX) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            cursor: zoom-out;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 85vh;
+            cursor: default;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        .modal-content img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
         /* --- Responsivo --- */
         @media screen and (max-width: 992px) {
             .main-content { padding-left: 0; }
@@ -243,39 +277,10 @@
         @media screen and (max-width: 768px) {
             h1, h2 { font-size: 2.5rem; } .hero-name { font-size: 3rem; } .hero-subtitle { font-size: 1.2rem; }
             .timeline::after, .timeline-line-progress { left: 15px; } .timeline-container { width: 100%; padding-left: 50px; padding-right: 15px; } .timeline-container::after { left: 1px; } .timeline-container.right { left: 0; }
-            .skills-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-            .skill-progress-circle { --w: 100px; font-size: 1.5rem;}
+            .skills-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+            .skill-progress-circle { --w: 90px; }
+            .skill-progress-circle i { font-size: 2.5rem; }
         }
-
-        /* --- Reemplaza tu CSS existente para .tech-tags span con esto --- */
-
-.tech-tags span {
-    background-color: var(--dark-color); /* Fondo más sutil */
-    color: var(--secondary-text);       /* Color de texto más neutro */
-    border: 1px solid var(--border-color); /* Borde para definir la etiqueta */
-    padding: 0.4rem 0.9rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.3s ease;
-}
-
-.tech-tags span i {
-    font-size: 1.2em; /* Ligeramente más grande para destacar */
-}
-
-/* --- Reemplaza también el :hover --- */
-
-.tech-tags span:hover {
-    transform: translateY(-3px);
-    background-color: var(--accent-color-transparent);
-    border-color: var(--accent-color);
-    color: var(--light-color); /* El texto se vuelve más brillante */
-    box-shadow: 0 4px 12px rgba(0, 255, 204, 0.2);
-}
     </style>
 </head>
 <body>
@@ -306,7 +311,6 @@
         <i class="fas fa-bars hamburger-icon"></i>
     </div>
     <nav class="mobile-nav">
-        <!-- El ícono de cierre ha sido removido -->
         <a href="#hero" class="nav-link">Home</a>
         <a href="#proyectos" class="nav-link">Proyectos</a>
         <a href="#certificados" class="nav-link">Certificados</a>
@@ -339,11 +343,10 @@
             <a href="#proyectos" class="scroll-down" aria-label="Scroll a proyectos"><i class="fas fa-chevron-down"></i></a>
         </section>
 
-                 <!-- Proyectos -->
+        <!-- Proyectos -->
         <section id="proyectos">
             <h2 data-aos="fade-down">Mis Proyectos</h2>
             <div class="projects-grid">
-                
                 <div class="project-card" data-aos="fade-up" data-aos-delay="100">
                     <video src="gato.mp4" autoplay loop muted playsinline loading="lazy"></video>
                     <div class="project-content">
@@ -360,7 +363,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="project-card" data-aos="fade-up" data-aos-delay="200">
                      <video src="gato.mp4" autoplay loop muted playsinline loading="lazy"></video>
                     <div class="project-content">
@@ -377,7 +379,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="project-card" data-aos="fade-up" data-aos-delay="300">
                     <video src="gato.mp4" autoplay loop muted playsinline loading="lazy"></video>
                     <div class="project-content">
@@ -394,40 +395,118 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
+
         <!-- Certificados -->
         <section id="certificados">
             <h2 data-aos="fade-down">Certificados</h2>
             <div class="certificates-grid">
+                <!-- Certificado 1: freeCodeCamp -->
                 <div class="certificate-card" data-aos="fade-up" data-aos-delay="100">
-                    <img src="https://static.platzi.com/media/user_upload/image%20%2815%29-660fbe8a-9861-4d87-b6d9-0be011be5f43.jpg" alt="Certificado de Desarrollo Web" loading="lazy">
-                    <p>Certificado Profesional en Desarrollo Web Full-Stack</p>
+                    <div class="certificate-image-wrapper">
+                        <img src="certificados/Responsive web desing.png" alt="Certificado Responsive Web Design" loading="lazy">
+                    </div>
+                    <div class="certificate-content">
+                        <h4>Responsive Web Design</h4>
+                        <p>Emitido por freeCodeCamp</p>
+                    </div>
                 </div>
+                <!-- Certificado 2: Bootcamp Ciberseguridad -->
                 <div class="certificate-card" data-aos="fade-up" data-aos-delay="200">
-                    <img src="https://static.platzi.com/media/user_upload/image%20%2815%29-660fbe8a-9861-4d87-b6d9-0be011be5f43.jpg" alt="Certificado de AWS" loading="lazy">
-                    <p>AWS Certified Cloud Practitioner</p>
+                    <div class="certificate-image-wrapper">
+                        <img src="certificados/Certificado Bootcamp de Seguridad de la Información y Ciberseguridad.jpg" alt="Certificado Bootcamp Ciberseguridad" loading="lazy">
+                    </div>
+                    <div class="certificate-content">
+                        <h4>Bootcamp en Ciberseguridad</h4>
+                        <p>Emitido por Capacitación Usach</p>
+                    </div>
                 </div>
+                <!-- Certificado 3: Fundamentos de SGSI -->
                 <div class="certificate-card" data-aos="fade-up" data-aos-delay="300">
-                    <img src="https://static.platzi.com/media/user_upload/image%20%2815%29-660fbe8a-9861-4d87-b6d9-0be011be5f43.jpg" alt="Certificado de Gestión de Proyectos" loading="lazy">
-                    <p>Project Management Professional (PMP)</p>
+                    <div class="certificate-image-wrapper">
+                        <img src="certificados/Certificado Fundamentos de SGSI.jpg" alt="Certificado Fundamentos de SGSI" loading="lazy">
+                    </div>
+                    <div class="certificate-content">
+                        <h4>Fundamentos de SGSI</h4>
+                        <p>Emitido por Capacitación Usach</p>
+                    </div>
                 </div>
+                <!-- Certificado 4: Gobernanza de Ciberseguridad -->
                 <div class="certificate-card" data-aos="fade-up" data-aos-delay="400">
-                    <img src="https://static.platzi.com/media/user_upload/image%20%2815%29-660fbe8a-9861-4d87-b6d9-0be011be5f43.jpg" alt="Certificado de Scrum" loading="lazy">
-                    <p>Professional Scrum Master™ I (PSM I)</p>
+                    <div class="certificate-image-wrapper">
+                        <img src="certificados/Certificado Fundamentos de Gobernanza.jpg" alt="Certificado Gobernanza de Ciberseguridad" loading="lazy">
+                    </div>
+                    <div class="certificate-content">
+                        <h4>Gobernanza de Ciberseguridad</h4>
+                        <p>Emitido por Capacitación Usach</p>
+                    </div>
+                </div>
+                <!-- Certificado 5: Rol del CISO -->
+                <div class="certificate-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="certificate-image-wrapper">
+                        <img src="certificados/Certificado Fundamentos del Rol del Oficial de Ciberseguridad (CISO).jpg" alt="Certificado Rol del CISO" loading="lazy">
+                    </div>
+                    <div class="certificate-content">
+                        <h4>Rol del Oficial de Ciberseguridad</h4>
+                        <p>Emitido por 8.8 Conference</p>
+                    </div>
+                </div>
+                <!-- Certificado 6: Ciberseguridad Ciudadana -->
+                <div class="certificate-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="certificate-image-wrapper">
+                        <img src="certificados/Fundamentos de Ciberseguridad Ciudadana 8dot.png" alt="Certificado Ciberseguridad Ciudadana" loading="lazy">
+                    </div>
+                    <div class="certificate-content">
+                        <h4>Ciberseguridad Ciudadana</h4>
+                        <p>Emitido por 8.8 Conference</p>
+                    </div>
+                </div>
+                <!-- Certificado 7: Técnico en Ciberseguridad -->
+                <div class="certificate-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="certificate-image-wrapper">
+                        <img src="certificados/Certificado Academia de Ciberseguridad.jpg" alt="Certificado Técnico en Ciberseguridad" loading="lazy">
+                    </div>
+                    <div class="certificate-content">
+                        <h4>Técnico en Ciberseguridad</h4>
+                        <p>Emitido por Academia de Ciberseguridad</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Estudios y Experiencia -->
         <section id="experiencia">
-            <h2 data-aos="fade-down">Estudios y Experiencia</h2>
+            <h2 data-aos="fade-down">Experiencia y Educación</h2>
             <div class="timeline">
                 <div class="timeline-line-progress"></div>
-                <div class="timeline-container left" data-aos="fade-right" data-aos-delay="100"><div class="timeline-content"><h3>Título del Puesto</h3><h4>Nombre de la Empresa</h4><p class="date">Enero 2023 - Presente</p><p>Breve descripción de las responsabilidades y logros.</p></div></div>
-                <div class="timeline-container right" data-aos="fade-left" data-aos-delay="200"><div class="timeline-content"><h3>Título Universitario</h3><h4>Nombre de la Universidad</h4><p class="date">Agosto 2018 - Diciembre 2022</p><p>Breve descripción de los estudios realizados y especialización.</p></div></div>
-                <div class="timeline-container left" data-aos="fade-right" data-aos-delay="100"><div class="timeline-content"><h3>Puesto Anterior</h3><h4>Otra Empresa</h4><p class="date">Junio 2021 - Diciembre 2022</p><p>Descripción de responsabilidades y logros.</p></div></div>
+                
+                <div class="timeline-container left" data-aos="fade-right" data-aos-delay="100">
+                    <div class="timeline-content">
+                        <h3>Desarrollador Backend Junior (Apoyo Temporal)</h3>
+                        <h4>Vicercom</h4>
+                        <p class="date">Enero 2024 - Febrero 2024</p>
+                        <p>Como apoyo en el equipo de desarrollo, colaboré en la implementación de APIs en C# para soluciones empresariales. Además, participé en pequeños proyectos utilizando Blazor, contribuyendo con el desarrollo de componentes y funcionalidades web modernas y funcionales.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-container right" data-aos="fade-left" data-aos-delay="200">
+                    <div class="timeline-content">
+                        <h3>Ingeniería en Informática</h3>
+                        <h4>Instituto Profesional Santo Tomas</h4>
+                        <p class="date">2022 - Actualidad</p>
+                        <p>Formación en redes, desarrollo de software, sistemas operativos, bases de datos y fundamentos de ciberseguridad.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-container left" data-aos="fade-right" data-aos-delay="100">
+                    <div class="timeline-content">
+                        <h3>Técnico en Telecomunicaciones</h3>
+                        <h4>Liceo Juan Piamarta</h4>
+                        <p class="date">2017 - 2020</p>
+                        <p>Especialización en sistemas de transmisión y redes. Reconocimientos por excelencia académica y resolución de problemas técnicos.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -435,31 +514,24 @@
         <section id="habilidades">
             <h2 data-aos="fade-down">Habilidades Técnicas</h2>
             <div class="skills-grid">
-                <div class="skill-card-wrapper" data-percentage="95" data-aos="fade-up" data-aos-delay="100">
-                    <div class="skill-progress-circle"><i class="devicon-html5-plain colored"></i></div>
-                    <p>HTML5</p>
-                </div>
-                <div class="skill-card-wrapper" data-percentage="90" data-aos="fade-up" data-aos-delay="150">
-                    <div class="skill-progress-circle"><i class="devicon-css3-plain colored"></i></div>
-                    <p>CSS3</p>
-                </div>
-                <div class="skill-card-wrapper" data-percentage="85" data-aos="fade-up" data-aos-delay="200">
-                    <div class="skill-progress-circle"><i class="devicon-javascript-plain colored"></i></div>
-                    <p>JavaScript</p>
-                </div>
-                <div class="skill-card-wrapper" data-percentage="80" data-aos="fade-up" data-aos-delay="250">
-                    <div class="skill-progress-circle"><i class="devicon-react-original colored"></i></div>
-                    <p>React</p>
-                </div>
-                <div class="skill-card-wrapper" data-percentage="75" data-aos="fade-up" data-aos-delay="300">
-                    <div class="skill-progress-circle"><i class="devicon-nodejs-plain colored"></i></div>
-                    <p>Node.js</p>
-                </div>
-                 <div class="skill-card-wrapper" data-percentage="70" data-aos="fade-up" data-aos-delay="350">
-                    <div class="skill-progress-circle"><i class="devicon-mongodb-plain colored"></i></div>
-                    <p>MongoDB</p>
-                </div>
+                <div class="skill-card-wrapper" data-percentage="85" data-aos="fade-up" data-aos-delay="100"><div class="skill-progress-circle"><i class="devicon-html5-plain colored"></i></div><p>HTML</p></div>
+                <div class="skill-card-wrapper" data-percentage="85" data-aos="fade-up" data-aos-delay="150"><div class="skill-progress-circle"><i class="devicon-css3-plain colored"></i></div><p>CSS</p></div>
+                <div class="skill-card-wrapper" data-percentage="80" data-aos="fade-up" data-aos-delay="200"><div class="skill-progress-circle"><i class="devicon-javascript-plain colored"></i></div><p>JavaScript</p></div>
+                <div class="skill-card-wrapper" data-percentage="80" data-aos="fade-up" data-aos-delay="250"><div class="skill-progress-circle"><i class="devicon-python-plain colored"></i></div><p>Python</p></div>
+                <div class="skill-card-wrapper" data-percentage="75" data-aos="fade-up" data-aos-delay="300"><div class="skill-progress-circle"><i class="devicon-php-plain colored"></i></div><p>PHP</p></div>
+                <div class="skill-card-wrapper" data-percentage="85" data-aos="fade-up" data-aos-delay="350"><div class="skill-progress-circle"><i class="devicon-csharp-plain colored"></i></div><p>C#</p></div>
+                <div class="skill-card-wrapper" data-percentage="70" data-aos="fade-up" data-aos-delay="400"><div class="skill-progress-circle"><i class="devicon-dotnetcore-plain colored"></i></div><p>Blazor (PWA)</p></div>
+                <div class="skill-card-wrapper" data-percentage="85" data-aos="fade-up" data-aos-delay="450"><div class="skill-progress-circle"><i class="devicon-git-plain colored"></i></div><p>Git / GitHub</p></div>
+                <div class="skill-card-wrapper" data-percentage="80" data-aos="fade-up" data-aos-delay="500"><div class="skill-progress-circle"><i class="devicon-mysql-plain colored"></i></div><p>SQL</p></div>
+                <div class="skill-card-wrapper" data-percentage="70" data-aos="fade-up" data-aos-delay="550"><div class="skill-progress-circle"><i class="fas fa-network-wired" style="font-size:2.8rem;"></i></div><p>Redes</p></div>
             </div>
+
+            <h3 data-aos="fade-up">Habilidades Blandas</h3>
+            <ul class="soft-skills-list" data-aos="fade-up" data-aos-delay="100">
+                <li>Trabajo en equipo y colaboración</li>
+                <li>Resolución de problemas técnicos</li>
+                <li>Pensamiento analítico</li>
+            </ul>
         </section>
 
         <!-- Footer y Contacto -->
@@ -478,6 +550,13 @@
     
     <!-- Botón Volver Arriba -->
     <a href="#hero" class="back-to-top" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Modal para Certificados (LIGHTBOX) -->
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <img src="" alt="Certificado Ampliado">
+        </div>
+    </div>
 
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -513,7 +592,7 @@
             if (window.matchMedia("(min-width: 992px)").matches) {
                 const cursorDot = document.querySelector('.cursor-dot');
                 const cursorOutline = document.querySelector('.cursor-outline');
-                const interactiveElements = document.querySelectorAll('a, button, .btn, .hamburger-menu, [data-aos], .theme-toggle');
+                const interactiveElements = document.querySelectorAll('a, button, .btn, .hamburger-menu, [data-aos], .theme-toggle, .certificate-card');
                 let mouseX = 0, mouseY = 0, posX = 0, posY = 0;
                 const animateCursor = () => { posX += (mouseX - posX) * 0.1; posY += (mouseY - posY) * 0.1; cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px)`; cursorOutline.style.transform = `translate(${posX - (cursorOutline.offsetWidth / 2)}px, ${posY - (cursorOutline.offsetHeight / 2)}px)`; requestAnimationFrame(animateCursor); };
                 document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
@@ -547,50 +626,22 @@
 
             // --- NAVBAR ACTIVA EN SCROLL ---
             const sections = document.querySelectorAll('section[id]'), navLinks = document.querySelectorAll('.navbar .nav-link');
-            const updateActiveLink = () => {
-                let current = ''; 
-                sections.forEach(section => { 
-                    if (pageYOffset >= section.offsetTop - 150) {
-                        current = section.id; 
-                    }
-                });
-                navLinks.forEach(link => { 
-                    link.classList.toggle('active', link.dataset.section === current); 
-                });
-            };
+            const updateActiveLink = () => { let current = ''; sections.forEach(section => { if (pageYOffset >= section.offsetTop - 150) { current = section.id; } }); navLinks.forEach(link => { link.classList.toggle('active', link.dataset.section === current); }); };
             window.addEventListener('scroll', updateActiveLink);
 
             // --- BOTÓN VOLVER ARRIBA ---
             const backToTopButton = document.querySelector('.back-to-top');
-            window.addEventListener('scroll', () => { 
-                backToTopButton.classList.toggle('visible', window.pageYOffset > 300); 
-            });
+            window.addEventListener('scroll', () => { backToTopButton.classList.toggle('visible', window.pageYOffset > 300); });
             
             // --- ANIMACIÓN TIMELINE ---
             const experienceSection = document.querySelector('#experiencia');
             if (experienceSection) {
                 const timelineLineProgress = document.querySelector('.timeline-line-progress');
                 const timelineContainers = document.querySelectorAll('.timeline-container');
-                const timelineObserver = new IntersectionObserver(entries => { 
-                    entries.forEach(entry => { 
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                        }
-                    }); 
-                }, { threshold: 0.8 });
-                
-                if (timelineContainers.length > 0) {
-                  timelineContainers.forEach(container => timelineObserver.observe(container));
-                }
-
-                const updateTimelineProgress = () => {
-                    const rect = experienceSection.getBoundingClientRect();
-                    const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
-                    if(timelineLineProgress) {
-                        timelineLineProgress.style.height = `${progress * 100}%`;
-                    }
-                };
-                window.addEventListener('scroll', updateTimelineProgress, { passive: true }); // Optimizacion
+                const timelineObserver = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.8 });
+                if (timelineContainers.length > 0) { timelineContainers.forEach(container => timelineObserver.observe(container)); }
+                const updateTimelineProgress = () => { const rect = experienceSection.getBoundingClientRect(); const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height))); if(timelineLineProgress) { timelineLineProgress.style.height = `${progress * 100}%`; } };
+                window.addEventListener('scroll', updateTimelineProgress, { passive: true });
             }
 
             // --- ANIMACIÓN DE HABILIDADES AL HACER SCROLL ---
@@ -607,10 +658,30 @@
                     }
                 });
             }, { threshold: 0.5 });
-            skillCards.forEach(card => { 
-                skillObserver.observe(card); 
+            skillCards.forEach(card => { skillObserver.observe(card); });
+
+            // --- LÓGICA DEL MODAL DE CERTIFICADOS ---
+            const certificateCards = document.querySelectorAll('.certificate-card');
+            const modalOverlay = document.querySelector('.modal-overlay');
+            const modalImage = modalOverlay.querySelector('.modal-content img');
+            const body = document.body;
+
+            certificateCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const imgSrc = card.querySelector('img').src;
+                    modalImage.src = imgSrc;
+                    modalOverlay.classList.add('active');
+                    body.classList.add('modal-open');
+                });
             });
 
+            modalOverlay.addEventListener('click', (event) => {
+                // Se cierra solo si se hace clic en el fondo, no en la imagen
+                if (event.target === modalOverlay) {
+                    modalOverlay.classList.remove('active');
+                    body.classList.remove('modal-open');
+                }
+            });
         });
     </script>
 </body>
