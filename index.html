@@ -113,22 +113,31 @@
         section { min-height: 100vh; padding: 6rem 3rem; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-bottom: 1px solid var(--border-color); transition: border-color 0.4s ease; overflow: hidden; }
         h1, h2 { margin-bottom: 2rem; font-size: 3rem; font-weight: 700; color: var(--light-color); }
         
-        section h2 { 
+        /* -- INICIO: ESTILOS DE TIPOGRAFÍA DINÁMICA -- */
+        h2 { 
             position: relative; 
             padding-bottom: 1rem; 
             overflow: hidden;
-        }
-        section h2 span {
             display: inline-block;
-            transform: translateY(100%);
-            opacity: 0;
-            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            cursor: pointer;
         }
-        section h2[data-aos="fade-down"].aos-animate span {
-            transform: translateY(0);
+        h2 .char {
+            display: inline-block;
+            transform: translateY(120%) skewY(10deg);
+            opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.2, 1, 0.3, 1), color 0.3s ease, text-shadow 0.3s ease;
+        }
+        h2:hover .char {
+             color: var(--accent-color);
+             text-shadow: 0 0 10px var(--accent-color);
+             transform: translateY(0) skewY(0) scale(1.05);
+        }
+        /* --- INICIO: CORRECCIÓN DEL SELECTOR --- */
+        h2.aos-animate .char {
+            transform: translateY(0) skewY(0);
             opacity: 1;
         }
-        section h2::after { 
+        h2::after { 
             content: ''; 
             display: block; 
             width: 0px; 
@@ -139,27 +148,16 @@
             bottom: 0; 
             transform: translateX(-50%); 
             border-radius: 2px; 
-            transition: background-color 0.3s ease, width 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.3s;
+            transition: background-color 0.3s ease, width 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
         }
-        section h2[data-aos="fade-down"].aos-animate::after {
+        h2.aos-animate::after {
             width: 80px;
         }
-        footer h2 {
-            position: relative;
-            padding-bottom: 1rem;
-        }
-        footer h2::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background-color: var(--accent-color);
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            transform: translateX(-50%);
-            border-radius: 2px;
-        }
+        /* --- FIN: CORRECCIÓN DEL SELECTOR --- */
+        /* -- FIN: ESTILOS DE TIPOGRAFÍA DINÁMICA -- */
+
+        footer h2 { position: relative; padding-bottom: 1rem; }
+        footer h2::after { content: ''; display: block; width: 80px; height: 4px; background-color: var(--accent-color); position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); border-radius: 2px; }
 
         /* --- Portada (Hero) --- */
         #hero { position: relative; background: var(--dark-color); background: linear-gradient(-45deg, #0a0a0a, #1a1a1a, #001f1a, #0a0a0a); animation: gradientBG 15s ease infinite; background-size: 400% 400%; }
@@ -168,15 +166,7 @@
         
         #particles-js { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; }
         
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            /* -- MODIFICACIÓN: AÑADIDO PARA EL EFECTO DE MOVIMIENTO -- */
-            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            will-change: transform;
-            transform-style: preserve-3d;
-        }
-
+        .hero-content { position: relative; z-index: 2; transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); will-change: transform; transform-style: preserve-3d; }
         .profile-pic { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 5px solid var(--accent-color); box-shadow: 0 0 40px var(--accent-color-transparent); animation: glow 2s infinite alternate ease-in-out; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
         @keyframes glow { from { box-shadow: 0 0 20px var(--accent-color-transparent); } to { box-shadow: 0 0 40px var(--accent-color); } }
         .hero-name { font-size: 4.5rem; margin: 1.5rem 0 0.5rem; letter-spacing: 2px; font-weight: 700; }
@@ -194,6 +184,21 @@
         .scroll-down { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: var(--accent-color); font-size: 2rem; animation: bounce 2s infinite; z-index: 2; }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); } 40% { transform: translate(-50%, -15px); } 60% { transform: translate(-50%, -5px); } }
 
+        /* --- SECCIÓN "SOBRE MÍ" --- */
+        #sobre-mi { background-color: var(--dark-color); }
+        .about-container { display: flex; align-items: center; justify-content: center; gap: 4rem; max-width: 1200px; width: 100%; text-align: left; }
+        .about-text { flex: 1.5; }
+        .about-text p { color: var(--secondary-text); margin-bottom: 1.5rem; line-height: 1.8; }
+        .about-text .highlight { color: var(--accent-color); font-weight: 600; }
+        .about-visual { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2rem; }
+        .about-visual .about-pic { width: 250px; height: 250px; border-radius: 50%; object-fit: cover; border: 5px solid var(--border-color); padding: 5px; background-color: var(--dark-color); transition: all 0.4s ease; }
+        .about-visual .about-pic:hover { transform: scale(1.05); border-color: var(--accent-color); box-shadow: 0 0 30px var(--accent-color-transparent); }
+        .about-hobbies h4 { font-size: 1.5rem; color: var(--light-color); margin-bottom: 1.5rem; text-align: center; }
+        .hobbies-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; }
+        .hobby-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; width: 80px; }
+        .hobby-item i { font-size: 2.5rem; color: var(--accent-color); }
+        .hobby-item span { color: var(--secondary-text); font-size: 0.9rem; }
+        
         /* --- Grillas Comunes --- */
         .projects-grid, .certificates-grid { display: grid; width: 100%; margin-top: 2rem; }
         .projects-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1200px; }
@@ -201,7 +206,6 @@
         .project-card, .certificate-card { background-color: var(--dark-color); border-radius: 10px; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s ease; position: relative; display: flex; flex-direction: column; }
         body.light-mode .project-card, body.light-mode .certificate-card { box-shadow: 0 4px 25px var(--shadow-color); }
         .project-card:hover, .certificate-card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 12px 35px var(--shadow-color); }
-        
         .project-card::before, .certificate-card::before, .skill-category::before { content: ''; position: absolute; inset: 0; border-radius: 10px; border: 2px solid transparent; background: radial-gradient(400px at var(--x) var(--y), var(--accent-color-transparent), transparent 80%) border-box; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; transition: opacity 0.3s; opacity: 0; pointer-events: none; }
         .project-card:hover::before, .certificate-card:hover::before, .skill-category:hover::before { opacity: 1; }
         
@@ -215,29 +219,11 @@
         .tech-tags span i { font-size: 1.2em; }
         .tech-tags span:hover { transform: translateY(-3px); background-color: var(--accent-color-transparent); border-color: var(--accent-color); color: var(--light-color); box-shadow: 0 4px 12px rgba(0, 255, 204, 0.2); }
         .project-buttons { margin-top: auto; }
-        
-        /* --- BOTÓN DE GITHUB RESTAURADO --- */
-        .project-buttons .btn {
-            display: inline-flex; /* Para alinear el ícono y el texto */
-            align-items: center;
-            gap: 0.5rem; /* Espacio entre ícono y texto */
-            color: var(--light-color);
-            background-color: transparent;
-            border: 2px solid var(--accent-color);
-            padding: 0.6rem 1.2rem;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-right: 0.5rem;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-        .project-buttons .btn:hover {
-            background-color: var(--accent-color);
-            color: var(--bg-light-dark);
-            box-shadow: 0 0 15px var(--accent-color);
-        }
+        .project-buttons .btn { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--light-color); background-color: transparent; border: 2px solid var(--accent-color); padding: 0.6rem 1.2rem; text-decoration: none; border-radius: 5px; margin-right: 0.5rem; transition: all 0.3s ease; font-weight: 600; }
+        .project-buttons .btn:hover { background-color: var(--accent-color); color: var(--bg-light-dark); box-shadow: 0 0 15px var(--accent-color); }
         
         /* --- Certificados --- */
+        #certificados { background-color: var(--dark-color); }
         .certificate-card { display: flex; flex-direction: column; text-align: left; overflow: hidden; cursor: zoom-in; }
         .certificate-image-wrapper { width: 100%; height: 180px; overflow: hidden; position: relative; }
         .certificate-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
@@ -261,7 +247,7 @@
         .timeline-content p.date { font-style: italic; color: var(--secondary-text); margin-bottom: 0.8rem; font-size: 0.9em; }
         body.light-mode .timeline-content { box-shadow: 0 4px 25px var(--shadow-color); }
         
-        /* --- ESTILOS HABILIDADES --- */
+        /* --- HABILIDADES --- */
         .skills-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; width: 100%; max-width: 1100px; margin-top: 3rem; }
         .skill-category { background-color: var(--dark-color); border: 1px solid var(--border-color); border-radius: 15px; padding: 2rem; position: relative; transition: transform 0.3s ease, box-shadow 0.3s ease; }
         body.light-mode .skill-category { box-shadow: 0 4px 25px var(--shadow-color); }
@@ -290,7 +276,7 @@
         .back-to-top { position: fixed; bottom: 20px; right: 20px; background-color: var(--accent-color); color: var(--dark-color); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none; opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.4s ease; z-index: 1000; }
         .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
         
-        /* --- ESTILOS DEL MODAL --- */
+        /* --- MODAL --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 2000; cursor: zoom-out; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-content { position: relative; max-width: 90vw; max-height: 85vh; cursor: default; transform: scale(0.9); transition: transform 0.3s ease; }
@@ -306,6 +292,10 @@
             .cursor-dot, .cursor-outline { display: none; } 
             body { cursor: auto; }
             .skills-container { grid-template-columns: 1fr; }
+            .about-container { flex-direction: column; text-align: center; gap: 3rem; }
+            .about-visual { order: -1; }
+            .about-pic { width: 200px; height: 200px; }
+            .hobbies-grid { gap: 1.5rem; }
         }
         @media screen and (max-width: 768px) {
             h1, h2 { font-size: 2.5rem; } .hero-name { font-size: 3rem; } .hero-subtitle { font-size: 1.2rem; }
@@ -316,15 +306,13 @@
 <body>
 
     <div id="scroll-progress-bar"></div>
-
-    <!-- Cursor Personalizado -->
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <!-- Navegación Escritorio -->
     <nav class="navbar">
         <div class="nav-links">
             <a href="#hero" class="nav-link active" data-section="hero"><i class="fas fa-home"></i><span class="nav-text">Home</span></a>
+            <a href="#sobre-mi" class="nav-link" data-section="sobre-mi"><i class="fas fa-user"></i><span class="nav-text">Sobre Mí</span></a>
             <a href="#proyectos" class="nav-link" data-section="proyectos"><i class="fas fa-project-diagram"></i><span class="nav-text">Proyectos</span></a>
             <a href="#certificados" class="nav-link" data-section="certificados"><i class="fas fa-certificate"></i><span class="nav-text">Certificados</span></a>
             <a href="#experiencia" class="nav-link" data-section="experiencia"><i class="fas fa-briefcase"></i><span class="nav-text">Experiencia</span></a>
@@ -338,12 +326,10 @@
         </button>
     </nav>
     
-    <!-- Menú Hamburguesa Móvil -->
-    <div class="hamburger-menu">
-        <i class="fas fa-bars hamburger-icon"></i>
-    </div>
+    <div class="hamburger-menu"><i class="fas fa-bars hamburger-icon"></i></div>
     <nav class="mobile-nav">
         <a href="#hero" class="nav-link">Home</a>
+        <a href="#sobre-mi" class="nav-link">Sobre Mí</a>
         <a href="#proyectos" class="nav-link">Proyectos</a>
         <a href="#certificados" class="nav-link">Certificados</a>
         <a href="#experiencia" class="nav-link">Experiencia</a>
@@ -357,21 +343,15 @@
     </nav>
 
     <div class="main-content">
-        <!-- Portada (Hero) -->
         <section id="hero">
             <div id="particles-js"></div>
-            
             <div class="hero-content" data-aos="fade-in" data-aos-duration="1000">
                 <img src="https://avatars.githubusercontent.com/u/125527408?v=4" alt="Foto de Lucas Jiménez" class="profile-pic" loading="lazy">
                 <h1 class="hero-name">Lucas Jiménez Sepúlveda</h1>
                 <p class="hero-subtitle"><span id="typing-text"></span><span class="typing-cursor"></span></p>
-                <p class="hero-description" data-aos="fade-in" data-aos-delay="200">
-                    Soy un desarrollador con experiencia en la creación de aplicaciones web robustas y eficientes. Mi enfoque se centra en escribir código limpio, intuitivo y optimizado, convirtiendo ideas complejas en realidades digitales funcionales y atractivas.
-                </p>
+                <p class="hero-description" data-aos="fade-in" data-aos-delay="200">Soy un desarrollador con experiencia en la creación de aplicaciones web robustas y eficientes. Mi enfoque se centra en escribir código limpio, intuitivo y optimizado, convirtiendo ideas complejas en realidades digitales funcionales y atractivas.</p>
                 <div class="hero-buttons" data-aos="fade-in" data-aos-delay="400">
-                    <a href="documentos/CV Lucas JImenez Sepulveda.pdf" download class="hero-btn">
-                        <i class="fas fa-file-download"></i> Descargar CV
-                    </a>
+                    <a href="documentos/CV Lucas JImenez Sepulveda.pdf" download class="hero-btn"><i class="fas fa-file-download"></i> Descargar CV</a>
                 </div>
                 <div class="social-icons" data-aos="fade-in" data-aos-delay="500">
                     <a href="https://github.com/LucasJS28" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
@@ -380,275 +360,140 @@
                     <a href="https://www.credly.com/users/lucas-jimenez.e1fd204d/badges#credly" target="_blank" aria-label="Credly"><i class="fas fa-award"></i></a>
                 </div>
             </div>
-            <a href="#proyectos" class="scroll-down" aria-label="Scroll a proyectos"><i class="fas fa-chevron-down"></i></a>
+            <a href="#sobre-mi" class="scroll-down" aria-label="Scroll a sobre mí"><i class="fas fa-chevron-down"></i></a>
         </section>
 
-        <!-- Proyectos -->
+        <section id="sobre-mi">
+             <!-- He añadido el data-aos al h2 para que la animación se dispare -->
+            <h2 data-aos="fade-up">Sobre Mí</h2>
+            <div class="about-container">
+                <div class="about-text" data-aos="fade-right">
+                    <p>
+                        Hola de nuevo. Soy Lucas, un apasionado por la tecnología que encuentra en la programación el puente perfecto entre la lógica y la creatividad. Para mí, programar no es solo escribir líneas de código; es <span class="highlight">esculpir soluciones</span>, resolver puzles y, en última instancia, construir algo que funcione y que sea bello a la vez.
+                    </p>
+                    <p>
+                        Mi filosofía se basa en la <span class="highlight">mejora continua</span> y el aprendizaje constante. Me encanta sumergirme en nuevas tecnologías y descubrir formas más eficientes de hacer las cosas. Creo firmemente que las mejores soluciones nacen de la colaboración y la comunicación.
+                    </p>
+                    <p>
+                        Cuando no estoy frente a la pantalla, probablemente me encuentres explorando mundos virtuales en algún videojuego, buscando la toma perfecta con mi cámara o disfrutando de una buena película de ciencia ficción. Estas pasiones alimentan mi creatividad y me inspiran a pensar fuera de la caja.
+                    </p>
+                </div>
+                <div class="about-visual" data-aos="fade-left" data-aos-delay="200">
+                    <!-- INICIO: IMAGEN ACTUALIZADA -->
+                    <img src="https://avatars.githubusercontent.com/u/125527408?v=4" alt="Foto personal de Lucas Jiménez" class="about-pic" loading="lazy">
+                    <!-- FIN: IMAGEN ACTUALIZADA -->
+                    <div class="about-hobbies">
+                        <h4>Intereses</h4>
+                        <!-- INICIO: INTERESES ACTUALIZADOS -->
+                        <div class="hobbies-grid">
+                            <div class="hobby-item">
+                                <i class="fas fa-gamepad"></i>
+                                <span>Gaming</span>
+                            </div>
+                            <div class="hobby-item">
+                                <i class="fas fa-code"></i>
+                                <span>Programación</span>
+                            </div>
+                            <div class="hobby-item">
+                                <i class="fas fa-film"></i>
+                                <span>Cine</span>
+                            </div>
+                        </div>
+                        <!-- FIN: INTERESES ACTUALIZADOS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="proyectos">
-            <h2 data-aos="fade-down"><span>Mis Proyectos</span></h2>
+            <h2 data-aos="fade-up">Mis Proyectos</h2>
             <div class="projects-grid">
-                 <!-- Proyecto STTVAR -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="100">
                     <video src="videos/gato.mp4" autoplay loop muted playsinline loading="lazy"></video>
                     <div class="project-content">
                         <h3>STTVAR</h3>
                         <p>Herramienta de transcripción, análisis y gestión de voz/audio en tiempo real con IA.</p>
-                        <div class="tech-tags">
-                            <span><i class="devicon-python-plain colored"></i>Python</span>
-                            <span><i class="devicon-html5-plain colored"></i>HTML</span>
-                            <span>PyQt5</span>
-                        </div>
-                        <div class="project-buttons">
-                            <!-- BOTÓN RESTAURADO -->
-                            <a href="https://github.com/LucasJS28/STTVAR" class="btn" target="_blank">
-                                <i class="fab fa-github"></i> GitHub
-                            </a>
-                        </div>
+                        <div class="tech-tags"><span><i class="devicon-python-plain colored"></i>Python</span><span><i class="devicon-html5-plain colored"></i>HTML</span><span>PyQt5</span></div>
+                        <div class="project-buttons"><a href="https://github.com/LucasJS28/STTVAR" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
                     </div>
                 </div>
-                <!-- Proyecto PishiGamesv2 -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="200">
                      <video src="videos/gato.mp4" autoplay loop muted playsinline loading="lazy"></video>
                     <div class="project-content">
                         <h3>PishiGames v2</h3>
                         <p>Tienda online simulada con gestión de usuarios, inventario, carrito y administradores.</p>
-                        <div class="tech-tags">
-                            <span><i class="devicon-php-plain colored"></i>PHP</span>
-                            <span><i class="devicon-javascript-plain colored"></i>JS</span>
-                             <span><i class="devicon-css3-plain colored"></i>CSS</span>
-                            <span>AJAX</span>
-                        </div>
-                        <div class="project-buttons">
-                            <!-- BOTÓN RESTAURADO -->
-                            <a href="https://github.com/LucasJS28/PishiGamesv2" class="btn" target="_blank">
-                                <i class="fab fa-github"></i> GitHub
-                            </a>
-                        </div>
+                        <div class="tech-tags"><span><i class="devicon-php-plain colored"></i>PHP</span><span><i class="devicon-javascript-plain colored"></i>JS</span><span><i class="devicon-css3-plain colored"></i>CSS</span><span>AJAX</span></div>
+                        <div class="project-buttons"><a href="https://github.com/LucasJS28/PishiGamesv2" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
                     </div>
                 </div>
-                <!-- Proyecto Depths of Fortune -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="300">
                     <video src="videos/gato.mp4" autoplay loop muted playsinline loading="lazy"></video>
                     <div class="project-content">
                         <h3>Depths of Fortune</h3>
                         <p>Juego 2D en Unity sobre buscar objetos en un tiempo determinado, evitando obstáculos.</p>
-                         <div class="tech-tags">
-                            <span><i class="devicon-csharp-plain colored"></i>C#</span>
-                            <span><i class="devicon-unity-original colored"></i>Unity</span>
-                        </div>
-                        <div class="project-buttons">
-                            <!-- BOTÓN RESTAURADO -->
-                            <a href="https://github.com/LucasJS28/Depths-of-fortune" class="btn" target="_blank">
-                                <i class="fab fa-github"></i> GitHub
-                            </a>
-                        </div>
+                         <div class="tech-tags"><span><i class="devicon-csharp-plain colored"></i>C#</span><span><i class="devicon-unity-original colored"></i>Unity</span></div>
+                        <div class="project-buttons"><a href="https://github.com/LucasJS28/Depths-of-fortune" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
                     </div>
                 </div>
-
-                <!-- Proyecto Street Art -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="100">
                     <video src="videos/gato.mp4" autoplay loop muted playsinline loading="lazy"></video>
                     <div class="project-content">
                         <h3>Street Art</h3>
                         <p>App Android con mapa interactivo para agregar y gestionar lugares para visitar en Talca.</p>
-                        <div class="tech-tags">
-                            <span><i class="devicon-java-plain colored"></i>Java</span>
-                            <span><i class="devicon-android-plain colored"></i>Android Studio</span>
-                        </div>
-                        <div class="project-buttons">
-                            <a href="https://github.com/LucasJS28/Street-Art" class="btn" target="_blank"><i
-                                    class="fab fa-github"></i> GitHub</a>
-                        </div>
+                        <div class="tech-tags"><span><i class="devicon-java-plain colored"></i>Java</span><span><i class="devicon-android-plain colored"></i>Android Studio</span></div>
+                        <div class="project-buttons"><a href="https://github.com/LucasJS28/Street-Art" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
                     </div>
                 </div>
-
-                <!-- Proyecto Soft-brain -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="200">
                     <video src="videos/gato.mp4" autoplay loop muted playsinline loading="lazy"></video>
                     <div class="project-content">
                         <h3>Soft-Brain</h3>
                         <p>Página web para presentar un emprendimiento universitario, con envío de CV vía Formspree.</p>
-                        <div class="tech-tags">
-                            <span><i class="devicon-html5-plain colored"></i>HTML</span>
-                            <span><i class="devicon-css3-plain colored"></i>CSS</span>
-                            <span><i class="devicon-javascript-plain colored"></i>JavaScript</span>
-                        </div>
-                        <div class="project-buttons">
-                            <a href="https://github.com/LucasJS28/Soft-brain" class="btn" target="_blank"><i
-                                    class="fab fa-github"></i> GitHub</a>
-                        </div>
+                        <div class="tech-tags"><span><i class="devicon-html5-plain colored"></i>HTML</span><span><i class="devicon-css3-plain colored"></i>CSS</span><span><i class="devicon-javascript-plain colored"></i>JavaScript</span></div>
+                        <div class="project-buttons"><a href="https://github.com/LucasJS28/Soft-brain" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Certificados -->
         <section id="certificados">
-            <h2 data-aos="fade-down"><span>Certificados</span></h2>
+            <h2 data-aos="fade-up">Certificados</h2>
             <div class="certificates-grid">
-                <!-- Certificado 1: freeCodeCamp -->
-                <div class="certificate-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="certificate-image-wrapper">
-                        <img src="certificados/Responsive web desing.png" alt="Certificado Responsive Web Design" loading="lazy">
-                    </div>
-                    <div class="certificate-content">
-                        <h4>Responsive Web Design</h4>
-                        <p>Emitido por freeCodeCamp</p>
-                    </div>
-                </div>
-                <!-- Certificado 2: Bootcamp Ciberseguridad -->
-                <div class="certificate-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="certificate-image-wrapper">
-                        <img src="certificados/Certificado Bootcamp de Seguridad de la Información y Ciberseguridad.jpg" alt="Certificado Bootcamp Ciberseguridad" loading="lazy">
-                    </div>
-                    <div class="certificate-content">
-                        <h4>Bootcamp en Ciberseguridad</h4>
-                        <p>Emitido por Capacitación Usach</p>
-                    </div>
-                </div>
-                <!-- Certificado 3: Fundamentos de SGSI -->
-                <div class="certificate-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="certificate-image-wrapper">
-                        <img src="certificados/Certificado Fundamentos de SGSI.jpg" alt="Certificado Fundamentos de SGSI" loading="lazy">
-                    </div>
-                    <div class="certificate-content">
-                        <h4>Fundamentos de SGSI</h4>
-                        <p>Emitido por Capacitación Usach</p>
-                    </div>
-                </div>
-                <!-- Certificado 4: Gobernanza de Ciberseguridad -->
-                <div class="certificate-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="certificate-image-wrapper">
-                        <img src="certificados/Certificado Fundamentos de Gobernanza.jpg" alt="Certificado Gobernanza de Ciberseguridad" loading="lazy">
-                    </div>
-                    <div class="certificate-content">
-                        <h4>Gobernanza de Ciberseguridad</h4>
-                        <p>Emitido por Capacitación Usach</p>
-                    </div>
-                </div>
-                <!-- Certificado 5: Rol del CISO -->
-                <div class="certificate-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="certificate-image-wrapper">
-                        <img src="certificados/Certificado Fundamentos del Rol del Oficial de Ciberseguridad (CISO).jpg" alt="Certificado Rol del CISO" loading="lazy">
-                    </div>
-                    <div class="certificate-content">
-                        <h4>Rol del Oficial de Ciberseguridad</h4>
-                        <p>Emitido por 8.8 Conference</p>
-                    </div>
-                </div>
-                <!-- Certificado 6: Ciberseguridad Ciudadana -->
-                <div class="certificate-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="certificate-image-wrapper">
-                        <img src="certificados/Fundamentos de Ciberseguridad Ciudadana 8dot.png" alt="Certificado Ciberseguridad Ciudadana" loading="lazy">
-                    </div>
-                    <div class="certificate-content">
-                        <h4>Ciberseguridad Ciudadana</h4>
-                        <p>Emitido por 8.8 Conference</p>
-                    </div>
-                </div>
-                <!-- Certificado 7: Técnico en Ciberseguridad -->
-                <div class="certificate-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="certificate-image-wrapper">
-                        <img src="certificados/Certificado Academia de Ciberseguridad.jpg" alt="Certificado Técnico en Ciberseguridad" loading="lazy">
-                    </div>
-                    <div class="certificate-content">
-                        <h4>Técnico en Ciberseguridad</h4>
-                        <p>Emitido por Academia de Ciberseguridad</p>
-                    </div>
-                </div>
+                <div class="certificate-card" data-aos="fade-up" data-aos-delay="100"><div class="certificate-image-wrapper"><img src="certificados/Responsive web desing.png" alt="Certificado Responsive Web Design" loading="lazy"></div><div class="certificate-content"><h4>Responsive Web Design</h4><p>Emitido por freeCodeCamp</p></div></div>
+                <div class="certificate-card" data-aos="fade-up" data-aos-delay="200"><div class="certificate-image-wrapper"><img src="certificados/Certificado Bootcamp de Seguridad de la Información y Ciberseguridad.jpg" alt="Certificado Bootcamp Ciberseguridad" loading="lazy"></div><div class="certificate-content"><h4>Bootcamp en Ciberseguridad</h4><p>Emitido por Capacitación Usach</p></div></div>
+                <div class="certificate-card" data-aos="fade-up" data-aos-delay="300"><div class="certificate-image-wrapper"><img src="certificados/Certificado Fundamentos de SGSI.jpg" alt="Certificado Fundamentos de SGSI" loading="lazy"></div><div class="certificate-content"><h4>Fundamentos de SGSI</h4><p>Emitido por Capacitación Usach</p></div></div>
+                <div class="certificate-card" data-aos="fade-up" data-aos-delay="400"><div class="certificate-image-wrapper"><img src="certificados/Certificado Fundamentos de Gobernanza.jpg" alt="Certificado Gobernanza de Ciberseguridad" loading="lazy"></div><div class="certificate-content"><h4>Gobernanza de Ciberseguridad</h4><p>Emitido por Capacitación Usach</p></div></div>
+                <div class="certificate-card" data-aos="fade-up" data-aos-delay="100"><div class="certificate-image-wrapper"><img src="certificados/Certificado Fundamentos del Rol del Oficial de Ciberseguridad (CISO).jpg" alt="Certificado Rol del CISO" loading="lazy"></div><div class="certificate-content"><h4>Rol del Oficial de Ciberseguridad</h4><p>Emitido por 8.8 Conference</p></div></div>
+                <div class="certificate-card" data-aos="fade-up" data-aos-delay="200"><div class="certificate-image-wrapper"><img src="certificados/Fundamentos de Ciberseguridad Ciudadana 8dot.png" alt="Certificado Ciberseguridad Ciudadana" loading="lazy"></div><div class="certificate-content"><h4>Ciberseguridad Ciudadana</h4><p>Emitido por 8.8 Conference</p></div></div>
+                <div class="certificate-card" data-aos="fade-up" data-aos-delay="300"><div class="certificate-image-wrapper"><img src="certificados/Certificado Academia de Ciberseguridad.jpg" alt="Certificado Técnico en Ciberseguridad" loading="lazy"></div><div class="certificate-content"><h4>Técnico en Ciberseguridad</h4><p>Emitido por Academia de Ciberseguridad</p></div></div>
             </div>
         </section>
 
-        <!-- Estudios y Experiencia -->
         <section id="experiencia">
-            <h2 data-aos="fade-down"><span>Experiencia y Educación</span></h2>
+            <h2 data-aos="fade-up">Experiencia y Educación</h2>
             <div class="timeline">
                 <div class="timeline-line-progress"></div>
-                <div class="timeline-container left" data-aos="fade-right" data-aos-delay="100">
-                    <div class="timeline-content">
-                        <h3>Desarrollador Backend Junior (Apoyo Temporal)</h3>
-                        <h4>Vicercom</h4>
-                        <p class="date">Enero 2024 - Febrero 2024</p>
-                        <p>Colaboré en la implementación de APIs en C# y participé en proyectos con Blazor, contribuyendo con el desarrollo de componentes y funcionalidades web modernas.</p>
-                    </div>
-                </div>
-                <div class="timeline-container right" data-aos="fade-left" data-aos-delay="200">
-                    <div class="timeline-content">
-                        <h3>Ingeniería en Informática</h3>
-                        <h4>Instituto Profesional Santo Tomas</h4>
-                        <p class="date">2022 - Actualidad</p>
-                        <p>Formación en redes, desarrollo de software, sistemas operativos, bases de datos y fundamentos de ciberseguridad.</p>
-                    </div>
-                </div>
-                <div class="timeline-container left" data-aos="fade-right" data-aos-delay="100">
-                    <div class="timeline-content">
-                        <h3>Técnico en Telecomunicaciones</h3>
-                        <h4>Liceo Juan Piamarta</h4>
-                        <p class="date">2017 - 2020</p>
-                        <p>Especialización en sistemas de transmisión y redes. Reconocimientos por excelencia académica y resolución de problemas técnicos.</p>
-                    </div>
-                </div>
+                <div class="timeline-container left" data-aos="fade-right"><div class="timeline-content"><h3>Desarrollador Backend Junior (Apoyo Temporal)</h3><h4>Vicercom</h4><p class="date">Enero 2024 - Febrero 2024</p><p>Colaboré en la implementación de APIs en C# y participé en proyectos con Blazor, contribuyendo con el desarrollo de componentes y funcionalidades web modernas.</p></div></div>
+                <div class="timeline-container right" data-aos="fade-left"><div class="timeline-content"><h3>Ingeniería en Informática</h3><h4>Instituto Profesional Santo Tomas</h4><p class="date">2022 - Actualidad</p><p>Formación en redes, desarrollo de software, sistemas operativos, bases de datos y fundamentos de ciberseguridad.</p></div></div>
+                <div class="timeline-container left" data-aos="fade-right"><div class="timeline-content"><h3>Técnico en Telecomunicaciones</h3><h4>Liceo Juan Piamarta</h4><p class="date">2017 - 2020</p><p>Especialización en sistemas de transmisión y redes. Reconocimientos por excelencia académica y resolución de problemas técnicos.</p></div></div>
             </div>
         </section>
 
-        <!-- Habilidades -->
         <section id="habilidades">
-            <h2 data-aos="fade-down"><span>Habilidades Técnicas</span></h2>
+            <h2 data-aos="fade-up">Habilidades Técnicas</h2>
             <div class="skills-container">
-                <!-- Categoría Frontend -->
-                <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
-                    <h3>Frontend</h3>
-                    <div class="skills-grid">
-                        <div class="skill-item"><i class="devicon-html5-plain colored"></i><span>HTML</span></div>
-                        <div class="skill-item"><i class="devicon-css3-plain colored"></i><span>CSS</span></div>
-                        <div class="skill-item"><i class="devicon-javascript-plain colored"></i><span>JavaScript</span></div>
-                        <div class="skill-item"><i class="devicon-dotnetcore-plain colored"></i><span>Blazor</span></div>                    </div>
-                </div>
-
-                <!-- Categoría Backend -->
-                <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
-                    <h3>Backend</h3>
-                    <div class="skills-grid">
-                        <div class="skill-item"><i class="devicon-python-plain colored"></i><span>Python</span></div>
-                        <div class="skill-item"><i class="devicon-php-plain colored"></i><span>PHP</span></div>
-                        <div class="skill-item"><i class="devicon-csharp-plain colored"></i><span>C#</span></div>
-                        <div class="skill-item"><i class="fas fa-database"></i><span>SQL</span></div>
-                        <div class="skill-item"><i class="devicon-java-plain colored"></i><span>Java</span></div>                    </div>
-                </div>
-
-                <!-- Categoría Aprendiendo -->
-                <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
-                    <h3>Aprendiendo</h3>
-                    <div class="skills-grid">
-                        <div class="skill-item"><i class="devicon-nodejs-plain colored"></i><span>Node.js</span></div>
-                        <div class="skill-item"><i class="devicon-express-original colored"></i><span>Express</span></div>
-                        <div class="skill-item"><i class="devicon-bootstrap-plain colored"></i><span>Bootstrap</span></div>
-                    </div>
-                </div>
-                
-                <!-- Categoría Herramientas -->
-                <div class="skill-category" data-aos="fade-up" data-aos-delay="400">
-                    <h3>Herramientas</h3>
-                    <div class="skills-grid">
-                        <div class="skill-item"><i class="devicon-git-plain colored"></i><span>Git</span></div>
-                        <div class="skill-item"><i class="devicon-vscode-plain colored"></i><span>VSCode</span></div>
-                        <div class="skill-item"><i class="devicon-github-original colored"></i><span>GitHub</span></div>
-                        <div class="skill-item"><i class="devicon-androidstudio-plain colored"></i><span>Android Studio</span></div>
-                </div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="100"><h3>Frontend</h3><div class="skills-grid"><div class="skill-item"><i class="devicon-html5-plain colored"></i><span>HTML</span></div><div class="skill-item"><i class="devicon-css3-plain colored"></i><span>CSS</span></div><div class="skill-item"><i class="devicon-javascript-plain colored"></i><span>JavaScript</span></div><div class="skill-item"><i class="devicon-dotnetcore-plain colored"></i><span>Blazor</span></div></div></div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="200"><h3>Backend</h3><div class="skills-grid"><div class="skill-item"><i class="devicon-python-plain colored"></i><span>Python</span></div><div class="skill-item"><i class="devicon-php-plain colored"></i><span>PHP</span></div><div class="skill-item"><i class="devicon-csharp-plain colored"></i><span>C#</span></div><div class="skill-item"><i class="fas fa-database"></i><span>SQL</span></div><div class="skill-item"><i class="devicon-java-plain colored"></i><span>Java</span></div></div></div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="300"><h3>Aprendiendo</h3><div class="skills-grid"><div class="skill-item"><i class="devicon-nodejs-plain colored"></i><span>Node.js</span></div><div class="skill-item"><i class="devicon-express-original colored"></i><span>Express</span></div><div class="skill-item"><i class="devicon-bootstrap-plain colored"></i><span>Bootstrap</span></div></div></div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="400"><h3>Herramientas</h3><div class="skills-grid"><div class="skill-item"><i class="devicon-git-plain colored"></i><span>Git</span></div><div class="skill-item"><i class="devicon-vscode-plain colored"></i><span>VSCode</span></div><div class="skill-item"><i class="devicon-github-original colored"></i><span>GitHub</span></div><div class="skill-item"><i class="devicon-androidstudio-plain colored"></i><span>Android Studio</span></div></div></div>
             </div>
         </section>
 
-
-        <!-- Footer y Contacto -->
         <footer id="footer">
             <div class="footer-container">
                 <h2>Contacto</h2>
-                <p class="footer-subtitle">
-                    ¿Tienes un proyecto en mente o simplemente quieres saludar? No dudes en contactarme. Estoy disponible para colaboraciones y nuevas oportunidades.
-                </p>
-                <a href="mailto:lucasjimenez.dev@gmail.com" class="contact-email-btn">
-                    <i class="fas fa-envelope"></i> lucasjimenez.dev@gmail.com
-                </a>
+                <p class="footer-subtitle">¿Tienes un proyecto en mente o simplemente quieres saludar? No dudes en contactarme. Estoy disponible para colaboraciones y nuevas oportunidades.</p>
+                <a href="mailto:lucasjimenez.dev@gmail.com" class="contact-email-btn"><i class="fas fa-envelope"></i> lucasjimenez.dev@gmail.com</a>
                 <div class="footer-social-icons">
                     <a href="https://github.com/LucasJS28" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
                     <a href="https://www.linkedin.com/in/lucasjs28" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
@@ -661,40 +506,38 @@
         </footer>
     </div>
     
-    <!-- Botón Volver Arriba -->
     <a href="#hero" class="back-to-top" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
 
-    <!-- Modal para Certificados (LIGHTBOX) -->
     <div class="modal-overlay">
-        <div class="modal-content">
-            <img src="" alt="Certificado Ampliado">
-        </div>
+        <div class="modal-content"><img src="" alt="Certificado Ampliado"></div>
     </div>
 
-    <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
-    <!-- Particles.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             
-            // --- INICIALIZAR AOS ---
-            AOS.init({ duration: 800, easing: 'ease-in-out-quad', once: false, offset: 120 });
+            AOS.init({ duration: 800, easing: 'ease-in-out-quad', once: false, offset: 50 });
+
+            document.querySelectorAll('h2[data-aos]').forEach(title => {
+                const text = title.textContent;
+                const chars = text.split('').map(char => `<span class="char">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
+                title.innerHTML = chars;
+                
+                title.querySelectorAll('.char').forEach((char, index) => {
+                    char.style.transitionDelay = `${index * 30}ms`;
+                });
+            });
             
-            // --- LÓGICA DE PARTÍCULAS ---
             const particleConfigDark = { particles: { number: { value: 80, density: { enable: true, value_area: 800 } }, color: { value: "#00ffcc" }, shape: { type: "circle" }, opacity: { value: 0.5, random: false }, size: { value: 3, random: true }, line_linked: { enable: true, distance: 150, color: "#00ffcc", opacity: 0.4, width: 1 }, move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out", bounce: false } }, interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true }, modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } } }, retina_detect: true };
             const particleConfigLight = { particles: { number: { value: 80, density: { enable: true, value_area: 800 } }, color: { value: "#00796b" }, shape: { type: "circle" }, opacity: { value: 0.6, random: false }, size: { value: 3, random: true }, line_linked: { enable: true, distance: 150, color: "#00796b", opacity: 0.4, width: 1 }, move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out", bounce: false } }, interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true }, modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } } }, retina_detect: true };
 
             const loadParticles = (theme) => {
                 const config = theme === 'light' ? particleConfigLight : particleConfigDark;
-                if(document.getElementById('particles-js')) {
-                    particlesJS('particles-js', config);
-                }
+                if(document.getElementById('particles-js')) { particlesJS('particles-js', config); }
             };
             
-            // --- LÓGICA DEL CAMBIO DE TEMA ---
             const themeToggles = document.querySelectorAll('.theme-toggle');
             const applyTheme = (theme) => {
                 document.body.classList.toggle('light-mode', theme === 'light');
@@ -710,16 +553,12 @@
             applyTheme(currentTheme);
             themeToggles.forEach(toggle => toggle.addEventListener('click', toggleTheme));
             
-            // --- LÓGICA DE BARRA DE PROGRESO DE SCROLL ---
             const scrollProgressBar = document.getElementById('scroll-progress-bar');
-            const updateProgressBar = () => {
+            window.addEventListener('scroll', () => {
                 const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-                const scrollPercent = (scrollTop / (scrollHeight - clientHeight)) * 100;
-                scrollProgressBar.style.width = `${scrollPercent}%`;
-            };
-            window.addEventListener('scroll', updateProgressBar);
+                scrollProgressBar.style.width = `${(scrollTop / (scrollHeight - clientHeight)) * 100}%`;
+            });
 
-            // --- LÓGICA CURSOR ---
             if (window.matchMedia("(min-width: 992px)").matches) {
                 const cursorDot = document.querySelector('.cursor-dot');
                 const cursorOutline = document.querySelector('.cursor-outline');
@@ -734,111 +573,82 @@
                 window.addEventListener('mousedown', () => cursorOutline.classList.add('clicked')); window.addEventListener('mouseup', () => cursorOutline.classList.remove('clicked'));
             }
 
-            // --- LÓGICA TARJETAS CON LUZ ---
             document.querySelectorAll('.project-card, .certificate-card, .skill-category').forEach(card => {
                 card.onmousemove = e => { const rect = card.getBoundingClientRect(); card.style.setProperty('--x', `${e.clientX - rect.left}px`); card.style.setProperty('--y', `${e.clientY - rect.top}px`); }
             });
 
-            // --- MODIFICACIÓN: EFECTO TILT HERO CON MOVIMIENTO DEL MOUSE ---
             const heroSection = document.querySelector('#hero');
             const heroContent = document.querySelector('.hero-content');
-            const tiltFactor = 15; // Puedes ajustar este valor para un efecto más o menos pronunciado
-
-            // Solo activar en dispositivos de escritorio
             if (window.matchMedia("(min-width: 992px)").matches && heroSection) {
+                const tiltFactor = 15;
                 heroSection.addEventListener('mousemove', (e) => {
                     const { offsetWidth: width, offsetHeight: height } = heroSection;
-                    // Calcula la posición del mouse desde el centro del elemento
-                    let x = (e.clientX - heroSection.offsetLeft - width / 2);
-                    let y = (e.clientY - heroSection.offsetTop - height / 2);
-                    
-                    // Normaliza los valores y calcula los ángulos de rotación
-                    const rotateY = (x / (width / 2)) * tiltFactor;
-                    const rotateX = -(y / (height / 2)) * tiltFactor;
-
-                    // Aplica la transformación CSS con perspectiva y un ligero escalado
+                    let x = (e.clientX - heroSection.offsetLeft - width / 2); let y = (e.clientY - heroSection.offsetTop - height / 2);
+                    const rotateY = (x / (width / 2)) * tiltFactor; const rotateX = -(y / (height / 2)) * tiltFactor;
                     heroContent.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
                 });
-
-                // Resetea la transformación cuando el mouse sale de la sección
-                heroSection.addEventListener('mouseleave', () => {
-                    heroContent.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-                });
+                heroSection.addEventListener('mouseleave', () => { heroContent.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)'; });
             }
 
-            // --- EFECTO DE ESCRITURA ---
             const typingTextElement = document.getElementById('typing-text');
             if (typingTextElement) {
-                const textsToType = ["Desarrollador Web Full Stack", "Apasionado por la tecnología", "Amante del diseño limpio"];
+                const textsToType = ["Desarrollador Web Full Stack", "Apasionado por la tecnología", "Amante del código limpio"];
                 let textIndex = 0, charIndex = 0, isDeleting = false;
                 const type = () => { const currentText = textsToType[textIndex]; if (isDeleting) charIndex--; else charIndex++; typingTextElement.textContent = currentText.substring(0, charIndex); if (!isDeleting && charIndex === currentText.length) { setTimeout(() => isDeleting = true, 2000); } else if (isDeleting && charIndex === 0) { isDeleting = false; textIndex = (textIndex + 1) % textsToType.length; } setTimeout(type, isDeleting ? 60 : 120); }
                 type();
             }
 
-            // --- MENÚ HAMBURGUESA ---
             const hamburgerMenu = document.querySelector('.hamburger-menu');
             const mobileNav = document.querySelector('.mobile-nav');
             const toggleMobileNav = () => mobileNav.classList.toggle('open');
             hamburgerMenu.addEventListener('click', toggleMobileNav);
             document.querySelectorAll('.mobile-nav .nav-link').forEach(link => link.addEventListener('click', toggleMobileNav));
 
-            // --- NAVBAR ACTIVA EN SCROLL ---
             const sections = document.querySelectorAll('section[id], footer[id]');
             const navLinks = document.querySelectorAll('.navbar .nav-link');
             const updateActiveLink = () => { 
-                let current = ''; 
-                sections.forEach(section => { 
-                    const sectionTop = section.offsetTop;
-                    if (pageYOffset >= sectionTop - 150) { 
-                        current = section.id; 
-                    } 
-                }); 
-                navLinks.forEach(link => { 
-                    link.classList.toggle('active', link.dataset.section === current); 
-                }); 
+                let current = 'hero'; 
+                sections.forEach(section => { if (pageYOffset >= section.offsetTop - 150) { current = section.id; } }); 
+                navLinks.forEach(link => { link.classList.toggle('active', link.dataset.section === current); }); 
             };
             window.addEventListener('scroll', updateActiveLink);
             updateActiveLink();
 
-            // --- BOTÓN VOLVER ARRIBA ---
             const backToTopButton = document.querySelector('.back-to-top');
             window.addEventListener('scroll', () => { backToTopButton.classList.toggle('visible', window.pageYOffset > 300); });
             
-            // --- ANIMACIÓN TIMELINE ---
             const experienceSection = document.querySelector('#experiencia');
             if (experienceSection) {
                 const timelineLineProgress = document.querySelector('.timeline-line-progress');
                 const timelineContainers = document.querySelectorAll('.timeline-container');
                 const timelineObserver = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.8 });
-                if (timelineContainers.length > 0) { timelineContainers.forEach(container => timelineObserver.observe(container)); }
-                const updateTimelineProgress = () => { const rect = experienceSection.getBoundingClientRect(); const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height))); if(timelineLineProgress) { timelineLineProgress.style.height = `${progress * 100}%`; } };
-                window.addEventListener('scroll', updateTimelineProgress, { passive: true });
+                timelineContainers.forEach(container => timelineObserver.observe(container));
+                window.addEventListener('scroll', () => { 
+                    const rect = experienceSection.getBoundingClientRect(); 
+                    const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height))); 
+                    if(timelineLineProgress) { timelineLineProgress.style.height = `${progress * 100}%`; } 
+                }, { passive: true });
             }
 
-            // --- LÓGICA DEL MODAL DE CERTIFICADOS ---
             const certificateCards = document.querySelectorAll('.certificate-card');
             const modalOverlay = document.querySelector('.modal-overlay');
             const modalImage = modalOverlay.querySelector('.modal-content img');
-            const body = document.body;
             certificateCards.forEach(card => {
                 card.addEventListener('click', () => {
                     modalImage.src = card.querySelector('img').src;
                     modalOverlay.classList.add('active');
-                    body.classList.add('modal-open');
+                    document.body.classList.add('modal-open');
                 });
             });
-            modalOverlay.addEventListener('click', (event) => {
-                if (event.target === modalOverlay) {
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
                     modalOverlay.classList.remove('active');
-                    body.classList.remove('modal-open');
+                    document.body.classList.remove('modal-open');
                 }
             });
 
-            // --- ACTUALIZAR AÑO DEL COPYRIGHT ---
             const currentYearSpan = document.getElementById('current-year');
-            if(currentYearSpan) {
-                currentYearSpan.textContent = new Date().getFullYear();
-            }
+            if(currentYearSpan) { currentYearSpan.textContent = new Date().getFullYear(); }
         });
     </script>
 </body>
