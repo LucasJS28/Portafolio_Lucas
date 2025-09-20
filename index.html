@@ -219,6 +219,9 @@
         .project-buttons .btn:hover { background-color: var(--accent-color); color: var(--bg-light-dark); box-shadow: 0 0 15px var(--accent-color); }
 
         /* --- INICIO: ESTILOS PARA EL CARRUSEL --- */
+        .carousel-wrapper { /* Nuevo contenedor para el carrusel y los puntos */
+            position: relative;
+        }
         .carousel-container {
             width: 100%;
             height: 200px;
@@ -226,8 +229,12 @@
             overflow: hidden;
             background-color: #000;
             border-radius: 10px 10px 0 0;
+            touch-action: pan-y; /* Permite scroll vertical pero no horizontal en el carrusel */
+            cursor: grab;
         }
-
+        .carousel-container:active {
+            cursor: grabbing;
+        }
         .carousel-slide {
             width: 100%;
             height: 100%;
@@ -243,14 +250,12 @@
             pointer-events: auto;
             cursor: zoom-in;
         }
-
         .carousel-image {
             width: 100%;
             height: 100%;
             background-size: cover;
             background-position: center;
         }
-        
         .slide-overlay {
             position: absolute;
             top: 0;
@@ -268,7 +273,6 @@
         .carousel-container:hover .carousel-slide.active .slide-overlay {
             opacity: 1;
         }
-        
         .slide-description {
             color: #f0f0f0; 
             text-shadow: 0 1px 3px rgba(0,0,0,0.6); 
@@ -278,11 +282,9 @@
             transform: translateY(15px);
             transition: transform 0.4s ease;
         }
-        
         .carousel-container:hover .slide-description {
             transform: translateY(0);
         }
-
         .carousel-arrow {
             position: absolute;
             top: 50%;
@@ -307,6 +309,33 @@
         }
         .carousel-arrow.prev { left: 10px; }
         .carousel-arrow.next { right: 10px; }
+
+        /* NUEVOS ESTILOS: Puntos indicadores */
+        .carousel-dots {
+            text-align: center;
+            padding: 10px 0;
+            background-color: var(--dark-color);
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            z-index: 15;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        .dot {
+            cursor: pointer;
+            height: 12px;
+            width: 12px;
+            background-color: var(--border-color);
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .dot.active, .dot:hover {
+            background-color: var(--accent-color);
+            transform: scale(1.2);
+        }
         /* --- FIN: ESTILOS PARA EL CARRUSEL --- */
         
         /* --- Certificados --- */
@@ -611,7 +640,9 @@
             <div class="projects-grid">
                 <!-- Proyecto 1: STTVAR -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="carousel-container"></div>
+                    <div class="carousel-wrapper">
+                        <div class="carousel-container"></div>
+                    </div>
                     <div class="carousel-image-data" style="display: none;">
                         <div data-src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Interfaz principal de la aplicación STTVAR."></div>
                         <div data-src="https://images.pexels.com/photos/33053/dog-golden-retriever-labrador-friend.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Muestra el análisis de sentimiento en tiempo real."></div>
@@ -626,7 +657,9 @@
                 
                 <!-- Proyecto 2: PishiGames v2 -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-                     <div class="carousel-container"></div>
+                    <div class="carousel-wrapper">
+                        <div class="carousel-container"></div>
+                    </div>
                     <div class="carousel-image-data" style="display: none;">
                         <div data-src="https://images.pexels.com/photos/220938/pexels-photo-220938.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Página de inicio de la tienda PishiGames v2."></div>
                         <div data-src="https://images.pexels.com/photos/731022/pexels-photo-731022.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Vista del carrito de compras funcional."></div>
@@ -641,7 +674,9 @@
 
                 <!-- Proyecto 3: Depths of Fortune -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="300">
-                     <div class="carousel-container"></div>
+                    <div class="carousel-wrapper">
+                        <div class="carousel-container"></div>
+                    </div>
                     <div class="carousel-image-data" style="display: none;">
                          <div data-src="https://images.pexels.com/photos/1660027/pexels-photo-1660027.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Gameplay del nivel acuático en 'Depths of Fortune'."></div>
                     </div>
@@ -655,7 +690,9 @@
 
                 <!-- Proyecto 4: Street Art -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="carousel-container"></div>
+                    <div class="carousel-wrapper">
+                        <div class="carousel-container"></div>
+                    </div>
                     <div class="carousel-image-data" style="display: none;">
                          <div data-src="https://images.pexels.com/photos/4588052/pexels-photo-4588052.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Vista del mapa interactivo de la app."></div>
                          <div data-src="https://images.pexels.com/photos/149090/pexels-photo-149090.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Formulario para añadir un nuevo punto de interés."></div>
@@ -670,7 +707,9 @@
 
                 <!-- Proyecto 5: Soft-Brain -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="carousel-container"></div>
+                    <div class="carousel-wrapper">
+                        <div class="carousel-container"></div>
+                    </div>
                      <div class="carousel-image-data" style="display: none;">
                          <div data-src="https://images.pexels.com/photos/160846/french-bulldog-summer-smile-joy-160846.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Landing page principal de Soft-Brain."></div>
                     </div>
@@ -873,7 +912,6 @@
             const backToTopButton = document.querySelector('.back-to-top');
             window.addEventListener('scroll', () => { backToTopButton.classList.toggle('visible', window.pageYOffset > 300); });
             
-            // --- INICIO: LÓGICA UNIFICADA PARA EL MODAL ---
             const modalOverlay = document.querySelector('.modal-overlay');
             const modalImage = modalOverlay.querySelector('.modal-content img');
             const modalCaption = modalOverlay.querySelector('.modal-caption');
@@ -890,25 +928,24 @@
                 document.body.classList.remove('modal-open');
             }
 
-            // Para los certificados
             document.querySelectorAll('.certificate-card').forEach(card => {
                 card.addEventListener('click', () => {
                     const imageSrc = card.querySelector('img').src;
-                    openModal(imageSrc); // No se pasa descripción
+                    openModal(imageSrc);
                 });
             });
 
             modalOverlay.addEventListener('click', (e) => {
                 if (e.target === modalOverlay) closeModal();
             });
-            // --- FIN: LÓGICA UNIFICADA PARA EL MODAL ---
 
-            // --- INICIO: SCRIPT DEL CARRUSEL DE PROYECTOS ---
+            // --- INICIO: SCRIPT DEL CARRUSEL DE PROYECTOS (MODIFICADO) ---
             document.querySelectorAll('.project-card').forEach(card => {
+                const carouselWrapper = card.querySelector('.carousel-wrapper');
                 const carouselContainer = card.querySelector('.carousel-container');
                 const imageDataSource = card.querySelector('.carousel-image-data');
                 
-                if (!carouselContainer || !imageDataSource) return;
+                if (!carouselWrapper || !carouselContainer || !imageDataSource) return;
 
                 const imageData = Array.from(imageDataSource.querySelectorAll('[data-src]')).map(item => ({
                     src: item.dataset.src,
@@ -921,8 +958,10 @@
                 }
                 
                 let currentIndex = 0;
+                let autoSlideInterval;
                 carouselContainer.innerHTML = ''; 
 
+                // Crea los slides y los añade al contenedor
                 imageData.forEach((data, index) => {
                     const slide = document.createElement('div');
                     slide.className = 'carousel-slide';
@@ -935,26 +974,89 @@
                          if (e.target.closest('.carousel-arrow')) return;
                          openModal(data.src, data.description);
                     });
-
                     carouselContainer.appendChild(slide);
                 });
                 
+                const slides = carouselContainer.querySelectorAll('.carousel-slide');
+                
+                // Función para mostrar un slide específico y actualizar los puntos
+                const showSlide = (index) => {
+                    slides.forEach((s, i) => s.classList.toggle('active', i === index));
+                    if (dotsContainer) {
+                        Array.from(dotsContainer.children).forEach((d, i) => d.classList.toggle('active', i === index));
+                    }
+                };
+
+                const nextSlide = () => {
+                    currentIndex = (currentIndex + 1) % imageData.length;
+                    showSlide(currentIndex);
+                };
+
+                // Iniciar/Reiniciar el deslizamiento automático
+                const startAutoSlide = () => {
+                    if (imageData.length <= 1) return;
+                    stopAutoSlide(); // Limpia cualquier intervalo anterior
+                    autoSlideInterval = setInterval(nextSlide, 5000);
+                };
+
+                const stopAutoSlide = () => clearInterval(autoSlideInterval);
+                
+                const resetAutoSlide = () => {
+                    stopAutoSlide();
+                    setTimeout(startAutoSlide, 5000); // Espera 5 segundos antes de reanudar
+                };
+
+                // Si hay más de una imagen, añade controles (flechas y puntos)
+                let dotsContainer;
                 if (imageData.length > 1) {
-                    const slides = carouselContainer.querySelectorAll('.carousel-slide');
-                    const showSlide = (index) => slides.forEach((s, i) => s.classList.toggle('active', i === index));
-                    
+                    // Flechas
                     const prevArrow = document.createElement('button');
-                    prevArrow.className = 'carousel-arrow prev';
-                    prevArrow.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                    prevArrow.className = 'carousel-arrow prev'; prevArrow.innerHTML = '<i class="fas fa-chevron-left"></i>';
                     
                     const nextArrow = document.createElement('button');
-                    nextArrow.className = 'carousel-arrow next';
-                    nextArrow.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                    nextArrow.className = 'carousel-arrow next'; nextArrow.innerHTML = '<i class="fas fa-chevron-right"></i>';
 
                     carouselContainer.append(prevArrow, nextArrow);
 
-                    nextArrow.addEventListener('click', (e) => { e.stopPropagation(); currentIndex = (currentIndex + 1) % imageData.length; showSlide(currentIndex); });
-                    prevArrow.addEventListener('click', (e) => { e.stopPropagation(); currentIndex = (currentIndex - 1 + imageData.length) % imageData.length; showSlide(currentIndex); });
+                    nextArrow.addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); resetAutoSlide(); });
+                    prevArrow.addEventListener('click', (e) => { e.stopPropagation(); currentIndex = (currentIndex - 1 + imageData.length) % imageData.length; showSlide(currentIndex); resetAutoSlide(); });
+                    
+                    // Puntos indicadores
+                    dotsContainer = document.createElement('div');
+                    dotsContainer.className = 'carousel-dots';
+                    imageData.forEach((_, index) => {
+                        const dot = document.createElement('span');
+                        dot.className = 'dot';
+                        if(index === 0) dot.classList.add('active');
+                        dot.addEventListener('click', () => { showSlide(index); resetAutoSlide(); });
+                        dotsContainer.appendChild(dot);
+                    });
+                    carouselWrapper.appendChild(dotsContainer); // Añade los puntos al wrapper
+
+                    // Iniciar carrusel automático
+                    startAutoSlide();
+                    carouselContainer.addEventListener('mouseenter', stopAutoSlide);
+                    carouselContainer.addEventListener('mouseleave', startAutoSlide);
+
+                    // Lógica para deslizar (Swipe)
+                    let touchStartX = 0;
+                    carouselContainer.addEventListener('touchstart', (e) => {
+                        touchStartX = e.touches[0].clientX;
+                        stopAutoSlide(); // Pausa al empezar a tocar
+                    });
+
+                    carouselContainer.addEventListener('touchend', (e) => {
+                        let touchEndX = e.changedTouches[0].clientX;
+                        let swipeThreshold = 50; // Mínimo de píxeles para considerar un swipe
+
+                        if (touchStartX - touchEndX > swipeThreshold) { // Swipe a la izquierda
+                            nextSlide();
+                        } else if (touchEndX - touchStartX > swipeThreshold) { // Swipe a la derecha
+                            currentIndex = (currentIndex - 1 + imageData.length) % imageData.length;
+                            showSlide(currentIndex);
+                        }
+                        resetAutoSlide(); // Reanuda el auto slide después de la interacción
+                    });
                 }
             });
             // --- FIN: SCRIPT DEL CARRUSEL DE PROYECTOS ---
