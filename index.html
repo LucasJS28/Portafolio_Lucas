@@ -114,30 +114,29 @@
         h1, h2 { margin-bottom: 2rem; font-size: 3rem; font-weight: 700; color: var(--light-color); }
         
         /* -- INICIO: ESTILOS DE TIPOGRAFÍA DINÁMICA -- */
-        h2 { 
+        h2, h3.column-title { 
             position: relative; 
             padding-bottom: 1rem; 
             overflow: hidden;
             display: inline-block;
             cursor: pointer;
         }
-        h2 .char {
+        h2 .char, h3.column-title .char {
             display: inline-block;
             transform: translateY(120%) skewY(10deg);
             opacity: 0;
             transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.2, 1, 0.3, 1), color 0.3s ease, text-shadow 0.3s ease;
         }
-        h2:hover .char {
+        h2:hover .char, h3.column-title:hover .char {
              color: var(--accent-color);
              text-shadow: 0 0 10px var(--accent-color);
              transform: translateY(0) skewY(0) scale(1.05);
         }
-        /* --- INICIO: CORRECCIÓN DEL SELECTOR --- */
-        h2.aos-animate .char {
+        h2.aos-animate .char, h3.column-title.aos-animate .char {
             transform: translateY(0) skewY(0);
             opacity: 1;
         }
-        h2::after { 
+        h2::after, h3.column-title::after { 
             content: ''; 
             display: block; 
             width: 0px; 
@@ -150,10 +149,8 @@
             border-radius: 2px; 
             transition: background-color 0.3s ease, width 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
         }
-        h2.aos-animate::after {
-            width: 80px;
-        }
-        /* --- FIN: CORRECCIÓN DEL SELECTOR --- */
+        h2.aos-animate::after { width: 80px; }
+        h3.column-title.aos-animate::after { width: 60px; }
         /* -- FIN: ESTILOS DE TIPOGRAFÍA DINÁMICA -- */
 
         footer h2 { position: relative; padding-bottom: 1rem; }
@@ -211,7 +208,6 @@
         
         /* --- Proyectos --- */
         #proyectos, #experiencia, #habilidades { background-color: var(--bg-light-dark); }
-        .project-card video { width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0; background-color: #000; }
         .project-content { padding: 1.5rem; text-align: left; display: flex; flex-direction: column; flex-grow: 1; }
         .project-content h3 { color: var(--accent-color); margin-bottom: 0.5rem; }
         .tech-tags { margin: 1rem 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
@@ -221,6 +217,97 @@
         .project-buttons { margin-top: auto; }
         .project-buttons .btn { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--light-color); background-color: transparent; border: 2px solid var(--accent-color); padding: 0.6rem 1.2rem; text-decoration: none; border-radius: 5px; margin-right: 0.5rem; transition: all 0.3s ease; font-weight: 600; }
         .project-buttons .btn:hover { background-color: var(--accent-color); color: var(--bg-light-dark); box-shadow: 0 0 15px var(--accent-color); }
+
+        /* --- INICIO: ESTILOS PARA EL CARRUSEL --- */
+        .carousel-container {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            background-color: #000;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .carousel-slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none;
+        }
+        .carousel-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            cursor: zoom-in;
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .carousel-container:hover .carousel-slide.active .slide-overlay {
+            opacity: 1;
+        }
+        
+        .slide-description {
+            color: #f0f0f0; 
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6); 
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            transform: translateY(15px);
+            transition: transform 0.4s ease;
+        }
+        
+        .carousel-container:hover .slide-description {
+            transform: translateY(0);
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-container:hover .carousel-arrow {
+            opacity: 1;
+        }
+        .carousel-arrow.prev { left: 10px; }
+        .carousel-arrow.next { right: 10px; }
+        /* --- FIN: ESTILOS PARA EL CARRUSEL --- */
         
         /* --- Certificados --- */
         #certificados { background-color: var(--dark-color); }
@@ -232,21 +319,108 @@
         .certificate-content h4 { color: var(--light-color); font-size: 1rem; font-weight: 600; line-height: 1.4; margin-bottom: 0.25rem; }
         .certificate-content p { color: var(--secondary-text); font-size: 0.85rem; font-weight: 400; }
 
-        /* --- Experiencia --- */
-        .timeline { position: relative; max-width: 1200px; margin: 2rem auto 0; }
-        .timeline::after { content: ''; position: absolute; width: 4px; background-color: var(--border-color); top: 0; bottom: 0; left: 50%; margin-left: -2px; transition: background-color 0.4s ease; }
-        .timeline-line-progress { position: absolute; width: 4px; background-color: var(--accent-color); top: 0; height: 0; left: 50%; margin-left: -2px; transition: height 0.5s ease-out, background-color 0.3s ease; z-index: 1; }
-        .timeline-container { padding: 10px 40px; position: relative; width: 50%; }
-        .timeline-container.left { left: 0; } .timeline-container.right { left: 50%; }
-        .timeline-container::after { content: ''; position: absolute; width: 20px; height: 20px; right: -14px; background-color: var(--bg-light-dark); border: 4px solid var(--border-color); top: 30px; border-radius: 50%; z-index: 2; transition: background-color 0.3s, border-color 0.3s; }
-        .timeline-container.visible::after { border-color: var(--accent-color); }
-        .right::after { left: -14px; }
-        .timeline-content { padding: 20px 30px; background-color: var(--dark-color); position: relative; border-radius: 6px; transition: background-color 0.4s ease; text-align: left; }
-        .timeline-content h3 { color: var(--light-color); }
-        .timeline-content h4 { color: var(--accent-color); margin: 0.5rem 0; font-weight: 500; }
-        .timeline-content p.date { font-style: italic; color: var(--secondary-text); margin-bottom: 0.8rem; font-size: 0.9em; }
-        body.light-mode .timeline-content { box-shadow: 0 4px 25px var(--shadow-color); }
+        /* --- INICIO: ESTILOS PARA EXPERIENCIA Y EDUCACIÓN --- */
+        #experiencia .experience-education-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 3rem;
+        }
+
+        .timeline-column {
+            width: 100%;
+        }
+
+        h3.column-title {
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
+            color: var(--light-color);
+            text-align: center;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+            border-left: 3px solid var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: -65px;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background-color: var(--bg-light-dark);
+            border: 3px solid var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
         
+        .timeline-icon i {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .timeline-content {
+            background-color: var(--dark-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: left;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+
+        .timeline-content h4 {
+            font-size: 1.2rem;
+            color: var(--light-color);
+            font-weight: 600;
+        }
+
+        .timeline-content .subheading {
+            color: var(--accent-color);
+            font-size: 1rem;
+            margin: 0.3rem 0 0.8rem 0;
+            font-weight: 500;
+        }
+
+        .timeline-content p.date {
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline-content p.description {
+            color: var(--secondary-text);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        @media screen and (min-width: 992px) {
+            #experiencia .experience-education-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        /* --- FIN: ESTILOS PARA EXPERIENCIA Y EDUCACIÓN --- */
+
         /* --- HABILIDADES --- */
         .skills-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; width: 100%; max-width: 1100px; margin-top: 3rem; }
         .skill-category { background-color: var(--dark-color); border: 1px solid var(--border-color); border-radius: 15px; padding: 2rem; position: relative; transition: transform 0.3s ease, box-shadow 0.3s ease; }
@@ -284,7 +458,7 @@
         .modal-content img { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
 
         /* --- Responsivo --- */
-        @media screen and (max-width: 992px) {
+        @media screen and (max-width: 991px) {
             .main-content { padding-left: 0; }
             .navbar { display: none; }
             .hamburger-menu { display: flex; }
@@ -299,7 +473,6 @@
         }
         @media screen and (max-width: 768px) {
             h1, h2 { font-size: 2.5rem; } .hero-name { font-size: 3rem; } .hero-subtitle { font-size: 1.2rem; }
-            .timeline::after, .timeline-line-progress { left: 15px; } .timeline-container { width: 100%; padding-left: 50px; padding-right: 15px; } .timeline-container::after { left: 1px; } .timeline-container.right { left: 0; }
         }
     </style>
 </head>
@@ -315,7 +488,7 @@
             <a href="#sobre-mi" class="nav-link" data-section="sobre-mi"><i class="fas fa-user"></i><span class="nav-text">Sobre Mí</span></a>
             <a href="#proyectos" class="nav-link" data-section="proyectos"><i class="fas fa-project-diagram"></i><span class="nav-text">Proyectos</span></a>
             <a href="#certificados" class="nav-link" data-section="certificados"><i class="fas fa-certificate"></i><span class="nav-text">Certificados</span></a>
-            <a href="#experiencia" class="nav-link" data-section="experiencia"><i class="fas fa-briefcase"></i><span class="nav-text">Experiencia</span></a>
+            <a href="#experiencia" class="nav-link" data-section="experiencia"><i class="fas fa-briefcase"></i><span class="nav-text">Mi Viaje</span></a>
             <a href="#habilidades" class="nav-link" data-section="habilidades"><i class="fas fa-cogs"></i><span class="nav-text">Habilidades</span></a>
             <a href="#footer" class="nav-link" data-section="footer"><i class="fas fa-envelope"></i><span class="nav-text">Contacto</span></a>
         </div>
@@ -332,7 +505,7 @@
         <a href="#sobre-mi" class="nav-link">Sobre Mí</a>
         <a href="#proyectos" class="nav-link">Proyectos</a>
         <a href="#certificados" class="nav-link">Certificados</a>
-        <a href="#experiencia" class="nav-link">Experiencia</a>
+        <a href="#experiencia" class="nav-link">Mi Viaje</a>
         <a href="#habilidades" class="nav-link">Habilidades</a>
         <a href="#footer" class="nav-link">Contacto</a>
         <button class="theme-toggle" aria-label="Cambiar tema">
@@ -364,7 +537,6 @@
         </section>
 
         <section id="sobre-mi">
-             <!-- He añadido el data-aos al h2 para que la animación se dispare -->
             <h2 data-aos="fade-up">Sobre Mí</h2>
             <div class="about-container">
                 <div class="about-text" data-aos="fade-right">
@@ -379,12 +551,9 @@
                     </p>
                 </div>
                 <div class="about-visual" data-aos="fade-left" data-aos-delay="200">
-                    <!-- INICIO: IMAGEN ACTUALIZADA -->
                     <img src="https://avatars.githubusercontent.com/u/125527408?v=4" alt="Foto personal de Lucas Jiménez" class="about-pic" loading="lazy">
-                    <!-- FIN: IMAGEN ACTUALIZADA -->
                     <div class="about-hobbies">
                         <h4>Intereses</h4>
-                        <!-- INICIO: INTERESES ACTUALIZADOS -->
                         <div class="hobbies-grid">
                             <div class="hobby-item">
                                 <i class="fas fa-gamepad"></i>
@@ -399,7 +568,6 @@
                                 <span>Cine</span>
                             </div>
                         </div>
-                        <!-- FIN: INTERESES ACTUALIZADOS -->
                     </div>
                 </div>
             </div>
@@ -408,8 +576,13 @@
         <section id="proyectos">
             <h2 data-aos="fade-up">Mis Proyectos</h2>
             <div class="projects-grid">
+                <!-- Proyecto 1: STTVAR -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-                    <video src="videos/gato.mp4" autoplay loop muted playsinline loading="lazy"></video>
+                    <div class="carousel-container"></div>
+                    <div class="carousel-image-data" style="display: none;">
+                        <div data-src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Interfaz principal de la aplicación STTVAR."></div>
+                        <div data-src="https://images.pexels.com/photos/33053/dog-golden-retriever-labrador-friend.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Muestra el análisis de sentimiento en tiempo real."></div>
+                    </div>
                     <div class="project-content">
                         <h3>STTVAR</h3>
                         <p>Herramienta de transcripción, análisis y gestión de voz/audio en tiempo real con IA.</p>
@@ -417,8 +590,14 @@
                         <div class="project-buttons"><a href="https://github.com/LucasJS28/STTVAR" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
                     </div>
                 </div>
+                
+                <!-- Proyecto 2: PishiGames v2 -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-                     <video src="videos/gato.mp4" autoplay loop muted playsinline loading="lazy"></video>
+                     <div class="carousel-container"></div>
+                    <div class="carousel-image-data" style="display: none;">
+                        <div data-src="https://images.pexels.com/photos/220938/pexels-photo-220938.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Página de inicio de la tienda PishiGames v2."></div>
+                        <div data-src="https://images.pexels.com/photos/731022/pexels-photo-731022.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Vista del carrito de compras funcional."></div>
+                    </div>
                     <div class="project-content">
                         <h3>PishiGames v2</h3>
                         <p>Tienda online simulada con gestión de usuarios, inventario, carrito y administradores.</p>
@@ -426,8 +605,13 @@
                         <div class="project-buttons"><a href="https://github.com/LucasJS28/PishiGamesv2" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
                     </div>
                 </div>
+
+                <!-- Proyecto 3: Depths of Fortune -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="300">
-                    <video src="videos/gato.mp4" autoplay loop muted playsinline loading="lazy"></video>
+                     <div class="carousel-container"></div>
+                    <div class="carousel-image-data" style="display: none;">
+                         <div data-src="https://images.pexels.com/photos/1660027/pexels-photo-1660027.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Gameplay del nivel acuático en 'Depths of Fortune'."></div>
+                    </div>
                     <div class="project-content">
                         <h3>Depths of Fortune</h3>
                         <p>Juego 2D en Unity sobre buscar objetos en un tiempo determinado, evitando obstáculos.</p>
@@ -435,8 +619,14 @@
                         <div class="project-buttons"><a href="https://github.com/LucasJS28/Depths-of-fortune" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
                     </div>
                 </div>
+
+                <!-- Proyecto 4: Street Art -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-                    <video src="videos/gato.mp4" autoplay loop muted playsinline loading="lazy"></video>
+                    <div class="carousel-container"></div>
+                    <div class="carousel-image-data" style="display: none;">
+                         <div data-src="https://images.pexels.com/photos/4588052/pexels-photo-4588052.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Vista del mapa interactivo de la app."></div>
+                         <div data-src="https://images.pexels.com/photos/149090/pexels-photo-149090.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Formulario para añadir un nuevo punto de interés."></div>
+                    </div>
                     <div class="project-content">
                         <h3>Street Art</h3>
                         <p>App Android con mapa interactivo para agregar y gestionar lugares para visitar en Talca.</p>
@@ -444,8 +634,13 @@
                         <div class="project-buttons"><a href="https://github.com/LucasJS28/Street-Art" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
                     </div>
                 </div>
+
+                <!-- Proyecto 5: Soft-Brain -->
                 <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-                    <video src="videos/gato.mp4" autoplay loop muted playsinline loading="lazy"></video>
+                    <div class="carousel-container"></div>
+                     <div class="carousel-image-data" style="display: none;">
+                         <div data-src="https://images.pexels.com/photos/160846/french-bulldog-summer-smile-joy-160846.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Landing page principal de Soft-Brain."></div>
+                    </div>
                     <div class="project-content">
                         <h3>Soft-Brain</h3>
                         <p>Página web para presentar un emprendimiento universitario, con envío de CV vía Formspree.</p>
@@ -470,12 +665,55 @@
         </section>
 
         <section id="experiencia">
-            <h2 data-aos="fade-up">Experiencia y Educación</h2>
-            <div class="timeline">
-                <div class="timeline-line-progress"></div>
-                <div class="timeline-container left" data-aos="fade-right"><div class="timeline-content"><h3>Desarrollador Backend Junior (Apoyo Temporal)</h3><h4>Vicercom</h4><p class="date">Enero 2024 - Febrero 2024</p><p>Colaboré en la implementación de APIs en C# y participé en proyectos con Blazor, contribuyendo con el desarrollo de componentes y funcionalidades web modernas.</p></div></div>
-                <div class="timeline-container right" data-aos="fade-left"><div class="timeline-content"><h3>Ingeniería en Informática</h3><h4>Instituto Profesional Santo Tomas</h4><p class="date">2022 - Actualidad</p><p>Formación en redes, desarrollo de software, sistemas operativos, bases de datos y fundamentos de ciberseguridad.</p></div></div>
-                <div class="timeline-container left" data-aos="fade-right"><div class="timeline-content"><h3>Técnico en Telecomunicaciones</h3><h4>Liceo Juan Piamarta</h4><p class="date">2017 - 2020</p><p>Especialización en sistemas de transmisión y redes. Reconocimientos por excelencia académica y resolución de problemas técnicos.</p></div></div>
+            <h2 data-aos="fade-up">Mi Viaje Profesional y Académico</h2>
+            <div class="experience-education-container">
+                <div class="timeline-column" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="column-title" data-aos="fade-up">Experiencia</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-icon"><i class="fas fa-briefcase"></i></div>
+                            <div class="timeline-content">
+                                <h4>Desarrollador Web Full Stack (Práctica)</h4>
+                                <p class="subheading">Nativa Green</p>
+                                <p class="date">Septiembre 2025 - Actualidad</p>
+                                <p class="description">Desarrollo y mantenimiento de aplicaciones web, trabajando tanto en el frontend como en el backend para crear soluciones completas y eficientes.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon"><i class="fas fa-briefcase"></i></div>
+                            <div class="timeline-content">
+                                <h4>Desarrollador Backend Junior (Apoyo Temporal)</h4>
+                                <p class="subheading">Vicercom</p>
+                                <p class="date">Enero 2024 - Febrero 2024</p>
+                                <p class="description">Colaboré en la implementación de APIs en C# y participé en proyectos con Blazor, contribuyendo con el desarrollo de componentes y funcionalidades web modernas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-column" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="column-title" data-aos="fade-up">Educación</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-icon"><i class="fas fa-graduation-cap"></i></div>
+                            <div class="timeline-content">
+                                <h4>Ingeniería en Informática</h4>
+                                <p class="subheading">Instituto Profesional Santo Tomas</p>
+                                <p class="date">2022 - Actualidad</p>
+                                <p class="description">Formación en redes, desarrollo de software, sistemas operativos, bases de datos y fundamentos de ciberseguridad.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon"><i class="fas fa-graduation-cap"></i></div>
+                            <div class="timeline-content">
+                                <h4>Técnico en Telecomunicaciones</h4>
+                                <p class="subheading">Liceo Juan Piamarta</p>
+                                <p class="date">2017 - 2020</p>
+                                <p class="description">Especialización en sistemas de transmisión y redes. Reconocimientos por excelencia académica y resolución de problemas técnicos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -509,7 +747,7 @@
     <a href="#hero" class="back-to-top" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
 
     <div class="modal-overlay">
-        <div class="modal-content"><img src="" alt="Certificado Ampliado"></div>
+        <div class="modal-content"><img src="" alt="Vista ampliada"></div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -520,24 +758,21 @@
             
             AOS.init({ duration: 800, easing: 'ease-in-out-quad', once: false, offset: 50 });
 
-            document.querySelectorAll('h2[data-aos]').forEach(title => {
+            document.querySelectorAll('h2[data-aos], h3.column-title[data-aos]').forEach(title => {
+                if (title.querySelector('.char')) return;
                 const text = title.textContent;
-                const chars = text.split('').map(char => `<span class="char">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
-                title.innerHTML = chars;
-                
+                title.innerHTML = text.split('').map(char => `<span class="char">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
                 title.querySelectorAll('.char').forEach((char, index) => {
                     char.style.transitionDelay = `${index * 30}ms`;
                 });
             });
             
-            const particleConfigDark = { particles: { number: { value: 80, density: { enable: true, value_area: 800 } }, color: { value: "#00ffcc" }, shape: { type: "circle" }, opacity: { value: 0.5, random: false }, size: { value: 3, random: true }, line_linked: { enable: true, distance: 150, color: "#00ffcc", opacity: 0.4, width: 1 }, move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out", bounce: false } }, interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true }, modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } } }, retina_detect: true };
-            const particleConfigLight = { particles: { number: { value: 80, density: { enable: true, value_area: 800 } }, color: { value: "#00796b" }, shape: { type: "circle" }, opacity: { value: 0.6, random: false }, size: { value: 3, random: true }, line_linked: { enable: true, distance: 150, color: "#00796b", opacity: 0.4, width: 1 }, move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out", bounce: false } }, interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true }, modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } } }, retina_detect: true };
-
+            const particleConfigDark = { particles: { number: { value: 80, density: { enable: true, value_area: 800 } }, color: { value: "#00ffcc" }, shape: { type: "circle" }, opacity: { value: 0.5 }, size: { value: 3, random: true }, line_linked: { enable: true, distance: 150, color: "#00ffcc", opacity: 0.4 }, move: { enable: true, speed: 2, direction: "none", out_mode: "out" } }, interactivity: { events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } } } };
+            const particleConfigLight = { particles: { number: { value: 80, density: { enable: true, value_area: 800 } }, color: { value: "#00796b" }, shape: { type: "circle" }, opacity: { value: 0.6 }, size: { value: 3, random: true }, line_linked: { enable: true, distance: 150, color: "#00796b", opacity: 0.4 }, move: { enable: true, speed: 2, direction: "none", out_mode: "out" } }, interactivity: { events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } } } };
             const loadParticles = (theme) => {
                 const config = theme === 'light' ? particleConfigLight : particleConfigDark;
                 if(document.getElementById('particles-js')) { particlesJS('particles-js', config); }
             };
-            
             const themeToggles = document.querySelectorAll('.theme-toggle');
             const applyTheme = (theme) => {
                 document.body.classList.toggle('light-mode', theme === 'light');
@@ -549,8 +784,7 @@
                 localStorage.setItem('theme', newTheme);
                 applyTheme(newTheme);
             };
-            const currentTheme = localStorage.getItem('theme') || 'dark';
-            applyTheme(currentTheme);
+            applyTheme(localStorage.getItem('theme') || 'dark');
             themeToggles.forEach(toggle => toggle.addEventListener('click', toggleTheme));
             
             const scrollProgressBar = document.getElementById('scroll-progress-bar');
@@ -562,34 +796,31 @@
             if (window.matchMedia("(min-width: 992px)").matches) {
                 const cursorDot = document.querySelector('.cursor-dot');
                 const cursorOutline = document.querySelector('.cursor-outline');
-                const interactiveElements = document.querySelectorAll('a, button, .btn, .hero-btn, .hamburger-menu, [data-aos], .theme-toggle, .certificate-card, .contact-email-btn, .skill-item');
+                const interactiveElements = document.querySelectorAll('a, button, .btn, .hamburger-menu, .theme-toggle, .certificate-card, .skill-item');
                 let mouseX = 0, mouseY = 0, posX = 0, posY = 0;
-                const animateCursor = () => { posX += (mouseX - posX) * 0.1; posY += (mouseY - posY) * 0.1; cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px)`; cursorOutline.style.transform = `translate(${posX - (cursorOutline.offsetWidth / 2)}px, ${posY - (cursorOutline.offsetHeight / 2)}px)`; requestAnimationFrame(animateCursor); };
+                const animateCursor = () => {
+                    posX += (mouseX - posX) * 0.1;
+                    posY += (mouseY - posY) * 0.1;
+                    cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+                    cursorOutline.style.transform = `translate(${posX - (cursorOutline.offsetWidth / 2)}px, ${posY - (cursorOutline.offsetHeight / 2)}px)`;
+                    requestAnimationFrame(animateCursor);
+                };
                 document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
                 animateCursor();
                 document.body.addEventListener('mouseleave', () => { cursorDot.classList.add('hidden'); cursorOutline.classList.add('hidden'); });
                 document.body.addEventListener('mouseenter', () => { cursorDot.classList.remove('hidden'); cursorOutline.classList.remove('hidden'); });
-                interactiveElements.forEach(el => { el.addEventListener('mouseover', () => cursorOutline.classList.add('hovered')); el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hovered')); });
-                window.addEventListener('mousedown', () => cursorOutline.classList.add('clicked')); window.addEventListener('mouseup', () => cursorOutline.classList.remove('clicked'));
+                interactiveElements.forEach(el => {
+                    el.addEventListener('mouseover', () => cursorOutline.classList.add('hovered'));
+                    el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hovered'));
+                });
+                window.addEventListener('mousedown', () => cursorOutline.classList.add('clicked'));
+                window.addEventListener('mouseup', () => cursorOutline.classList.remove('clicked'));
             }
-
+            
             document.querySelectorAll('.project-card, .certificate-card, .skill-category').forEach(card => {
                 card.onmousemove = e => { const rect = card.getBoundingClientRect(); card.style.setProperty('--x', `${e.clientX - rect.left}px`); card.style.setProperty('--y', `${e.clientY - rect.top}px`); }
             });
-
-            const heroSection = document.querySelector('#hero');
-            const heroContent = document.querySelector('.hero-content');
-            if (window.matchMedia("(min-width: 992px)").matches && heroSection) {
-                const tiltFactor = 15;
-                heroSection.addEventListener('mousemove', (e) => {
-                    const { offsetWidth: width, offsetHeight: height } = heroSection;
-                    let x = (e.clientX - heroSection.offsetLeft - width / 2); let y = (e.clientY - heroSection.offsetTop - height / 2);
-                    const rotateY = (x / (width / 2)) * tiltFactor; const rotateX = -(y / (height / 2)) * tiltFactor;
-                    heroContent.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-                });
-                heroSection.addEventListener('mouseleave', () => { heroContent.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)'; });
-            }
-
+            
             const typingTextElement = document.getElementById('typing-text');
             if (typingTextElement) {
                 const textsToType = ["Desarrollador Web Full Stack", "Apasionado por la tecnología", "Amante del código limpio"];
@@ -600,52 +831,95 @@
 
             const hamburgerMenu = document.querySelector('.hamburger-menu');
             const mobileNav = document.querySelector('.mobile-nav');
-            const toggleMobileNav = () => mobileNav.classList.toggle('open');
-            hamburgerMenu.addEventListener('click', toggleMobileNav);
-            document.querySelectorAll('.mobile-nav .nav-link').forEach(link => link.addEventListener('click', toggleMobileNav));
-
-            const sections = document.querySelectorAll('section[id], footer[id]');
-            const navLinks = document.querySelectorAll('.navbar .nav-link');
-            const updateActiveLink = () => { 
-                let current = 'hero'; 
-                sections.forEach(section => { if (pageYOffset >= section.offsetTop - 150) { current = section.id; } }); 
-                navLinks.forEach(link => { link.classList.toggle('active', link.dataset.section === current); }); 
-            };
-            window.addEventListener('scroll', updateActiveLink);
-            updateActiveLink();
+            hamburgerMenu.addEventListener('click', () => mobileNav.classList.toggle('open'));
+            document.querySelectorAll('.mobile-nav .nav-link').forEach(link => link.addEventListener('click', () => mobileNav.classList.remove('open')));
 
             const backToTopButton = document.querySelector('.back-to-top');
             window.addEventListener('scroll', () => { backToTopButton.classList.toggle('visible', window.pageYOffset > 300); });
             
-            const experienceSection = document.querySelector('#experiencia');
-            if (experienceSection) {
-                const timelineLineProgress = document.querySelector('.timeline-line-progress');
-                const timelineContainers = document.querySelectorAll('.timeline-container');
-                const timelineObserver = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } }); }, { threshold: 0.8 });
-                timelineContainers.forEach(container => timelineObserver.observe(container));
-                window.addEventListener('scroll', () => { 
-                    const rect = experienceSection.getBoundingClientRect(); 
-                    const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height))); 
-                    if(timelineLineProgress) { timelineLineProgress.style.height = `${progress * 100}%`; } 
-                }, { passive: true });
-            }
-
-            const certificateCards = document.querySelectorAll('.certificate-card');
+            // --- INICIO: LÓGICA UNIFICADA PARA EL MODAL ---
             const modalOverlay = document.querySelector('.modal-overlay');
             const modalImage = modalOverlay.querySelector('.modal-content img');
-            certificateCards.forEach(card => {
+
+            function openModal(imageSrc) {
+                modalImage.src = imageSrc;
+                modalOverlay.classList.add('active');
+                document.body.classList.add('modal-open');
+            }
+
+            function closeModal() {
+                modalOverlay.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            }
+
+            // Para los certificados
+            document.querySelectorAll('.certificate-card').forEach(card => {
                 card.addEventListener('click', () => {
-                    modalImage.src = card.querySelector('img').src;
-                    modalOverlay.classList.add('active');
-                    document.body.classList.add('modal-open');
+                    const imageSrc = card.querySelector('img').src;
+                    openModal(imageSrc);
                 });
             });
+
             modalOverlay.addEventListener('click', (e) => {
-                if (e.target === modalOverlay) {
-                    modalOverlay.classList.remove('active');
-                    document.body.classList.remove('modal-open');
+                if (e.target === modalOverlay) closeModal();
+            });
+            // --- FIN: LÓGICA UNIFICADA PARA EL MODAL ---
+
+            // --- INICIO: SCRIPT DEL CARRUSEL DE PROYECTOS (LEE DESDE HTML) ---
+            document.querySelectorAll('.project-card').forEach(card => {
+                const carouselContainer = card.querySelector('.carousel-container');
+                const imageDataSource = card.querySelector('.carousel-image-data');
+                
+                if (!carouselContainer || !imageDataSource) return;
+
+                const imageData = Array.from(imageDataSource.querySelectorAll('[data-src]')).map(item => ({
+                    src: item.dataset.src,
+                    description: item.dataset.description || ''
+                }));
+
+                if (imageData.length === 0) {
+                    carouselContainer.innerHTML = '<p style="padding:1rem; color:var(--secondary-text);">No hay imágenes.</p>';
+                    return;
+                }
+                
+                let currentIndex = 0;
+                carouselContainer.innerHTML = ''; 
+
+                imageData.forEach((data, index) => {
+                    const slide = document.createElement('div');
+                    slide.className = 'carousel-slide';
+                    if (index === 0) slide.classList.add('active');
+                    slide.innerHTML = `
+                        <div class="carousel-image" style="background-image: url('${data.src}')"></div>
+                        <div class="slide-overlay"><p class="slide-description">${data.description}</p></div>`;
+                    
+                    slide.addEventListener('click', (e) => {
+                         if (e.target.classList.contains('carousel-arrow')) return;
+                         openModal(data.src);
+                    });
+
+                    carouselContainer.appendChild(slide);
+                });
+                
+                if (imageData.length > 1) {
+                    const slides = carouselContainer.querySelectorAll('.carousel-slide');
+                    const showSlide = (index) => slides.forEach((s, i) => s.classList.toggle('active', i === index));
+                    
+                    const prevArrow = document.createElement('button');
+                    prevArrow.className = 'carousel-arrow prev';
+                    prevArrow.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                    
+                    const nextArrow = document.createElement('button');
+                    nextArrow.className = 'carousel-arrow next';
+                    nextArrow.innerHTML = '<i class="fas fa-chevron-right"></i>';
+
+                    carouselContainer.append(prevArrow, nextArrow);
+
+                    nextArrow.addEventListener('click', (e) => { e.stopPropagation(); currentIndex = (currentIndex + 1) % imageData.length; showSlide(currentIndex); });
+                    prevArrow.addEventListener('click', (e) => { e.stopPropagation(); currentIndex = (currentIndex - 1 + imageData.length) % imageData.length; showSlide(currentIndex); });
                 }
             });
+            // --- FIN: SCRIPT DEL CARRUSEL DE PROYECTOS ---
 
             const currentYearSpan = document.getElementById('current-year');
             if(currentYearSpan) { currentYearSpan.textContent = new Date().getFullYear(); }
