@@ -517,6 +517,37 @@
         .modal-caption:not(:empty) {
             display: block; /* Visible solo si tiene texto */
         }
+        
+        /* --- NUEVOS ESTILOS: Flechas de navegación del Modal --- */
+        .modal-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(30, 30, 30, 0.6);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 2001; /* Mayor que el contenido del modal */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: none; /* Ocultas por defecto */
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+            -webkit-tap-highlight-color: transparent; /* Evita el destello azul en móviles */
+        }
+        .modal-arrow:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .modal-arrow.prev { left: 20px; }
+        .modal-arrow.next { right: 20px; }
+
+        /* Muestra las flechas si el modal tiene la clase 'navigable' */
+        .modal-overlay.navigable .modal-arrow {
+            display: flex;
+        }
         /* --- FIN: ESTILOS MODAL MEJORADOS --- */
 
         /* --- Responsivo --- */
@@ -535,6 +566,21 @@
         }
         @media screen and (max-width: 768px) {
             h1, h2 { font-size: 2.5rem; } .hero-name { font-size: 3rem; } .hero-subtitle { font-size: 1.2rem; }
+
+            /* --- Ajustes responsivos para las flechas del modal --- */
+            .modal-arrow {
+                width: 45px;
+                height: 45px;
+                font-size: 1.5rem;
+                top: auto;
+                transform: none;
+                bottom: 5vh; /* Posicionarlas más abajo en móviles */
+            }
+            .modal-arrow.prev { left: 15px; }
+            .modal-arrow.next { right: 15px; }
+            .modal-content img {
+                 max-height: calc(80vh - 60px); /* Reducir altura de la imagen para que no choque con las flechas */
+            }
         }
     </style>
 </head>
@@ -837,12 +883,16 @@
     
     <a href="#hero" class="back-to-top" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
 
+    <!-- INICIO: CÓDIGO HTML DEL MODAL MODIFICADO -->
     <div class="modal-overlay">
+        <button class="modal-arrow prev" aria-label="Anterior imagen"><i class="fas fa-chevron-left"></i></button>
         <div class="modal-content">
             <img src="" alt="Vista ampliada">
             <p class="modal-caption"></p>
         </div>
+        <button class="modal-arrow next" aria-label="Siguiente imagen"><i class="fas fa-chevron-right"></i></button>
     </div>
+    <!-- FIN: CÓDIGO HTML DEL MODAL MODIFICADO -->
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
@@ -931,13 +981,35 @@
             const backToTopButton = document.querySelector('.back-to-top');
             window.addEventListener('scroll', () => { backToTopButton.classList.toggle('visible', window.pageYOffset > 300); });
             
+
+            // --- INICIO: LÓGICA DEL MODAL MODIFICADA ---
             const modalOverlay = document.querySelector('.modal-overlay');
             const modalImage = modalOverlay.querySelector('.modal-content img');
             const modalCaption = modalOverlay.querySelector('.modal-caption');
+            const modalPrevBtn = modalOverlay.querySelector('.modal-arrow.prev');
+            const modalNextBtn = modalOverlay.querySelector('.modal-arrow.next');
 
-            function openModal(imageSrc, description = '') {
-                modalImage.src = imageSrc;
-                modalCaption.textContent = description;
+            let currentGallery = [];
+            let currentModalIndex = 0;
+
+            function showModalImage(index) {
+                if (index < 0 || index >= currentGallery.length) return;
+                const item = currentGallery[index];
+                modalImage.src = item.src;
+                modalCaption.textContent = item.description;
+                currentModalIndex = index;
+            }
+
+            function openModal(gallery, startIndex) {
+                currentGallery = gallery;
+                showModalImage(startIndex);
+
+                if (currentGallery.length > 1) {
+                    modalOverlay.classList.add('navigable');
+                } else {
+                    modalOverlay.classList.remove('navigable');
+                }
+
                 modalOverlay.classList.add('active');
                 document.body.classList.add('modal-open');
             }
@@ -945,18 +1017,37 @@
             function closeModal() {
                 modalOverlay.classList.remove('active');
                 document.body.classList.remove('modal-open');
+                // Reseteamos el estado para la próxima vez que se abra
+                currentGallery = [];
+                currentModalIndex = 0;
             }
 
+            // Event listeners para los botones de navegación del modal
+            modalPrevBtn.addEventListener('click', () => {
+                const newIndex = (currentModalIndex - 1 + currentGallery.length) % currentGallery.length;
+                showModalImage(newIndex);
+            });
+
+            modalNextBtn.addEventListener('click', () => {
+                const newIndex = (currentModalIndex + 1) % currentGallery.length;
+                showModalImage(newIndex);
+            });
+
+            // Modificamos el listener de los certificados
             document.querySelectorAll('.certificate-card').forEach(card => {
                 card.addEventListener('click', () => {
                     const imageSrc = card.querySelector('img').src;
-                    openModal(imageSrc);
+                    const description = card.querySelector('h4').textContent;
+                    const gallery = [{ src: imageSrc, description: description }];
+                    openModal(gallery, 0);
                 });
             });
 
             modalOverlay.addEventListener('click', (e) => {
                 if (e.target === modalOverlay) closeModal();
             });
+            // --- FIN: LÓGICA DEL MODAL MODIFICADA ---
+
 
             // --- INICIO: SCRIPT DEL CARRUSEL DE PROYECTOS (MODIFICADO) ---
             document.querySelectorAll('.project-card').forEach(card => {
@@ -989,9 +1080,10 @@
                         <div class="carousel-image" style="background-image: url('${data.src}')"></div>
                         <div class="slide-overlay"><p class="slide-description">${data.description}</p></div>`;
                     
+                    // Listener modificado para abrir el modal con la galería completa
                     slide.addEventListener('click', (e) => {
                          if (e.target.closest('.carousel-arrow')) return;
-                         openModal(data.src, data.description);
+                         openModal(imageData, index); // <-- ¡AQUÍ ESTÁ LA MODIFICACIÓN CLAVE!
                     });
                     carouselContainer.appendChild(slide);
                 });
