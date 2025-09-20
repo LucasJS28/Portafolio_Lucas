@@ -450,12 +450,45 @@
         .back-to-top { position: fixed; bottom: 20px; right: 20px; background-color: var(--accent-color); color: var(--dark-color); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none; opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.4s ease; z-index: 1000; }
         .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
         
-        /* --- MODAL --- */
+        /* --- INICIO: ESTILOS MODAL MEJORADOS --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 2000; cursor: zoom-out; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content { position: relative; max-width: 90vw; max-height: 85vh; cursor: default; transform: scale(0.9); transition: transform 0.3s ease; }
+        .modal-content { 
+            position: relative; 
+            max-width: 90vw; 
+            max-height: 90vh; 
+            cursor: default; 
+            transform: scale(0.9); 
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         .modal-overlay.active .modal-content { transform: scale(1); }
-        .modal-content img { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .modal-content img { 
+            display: block; 
+            width: 100%; 
+            height: auto;
+            max-width: 100%;
+            max-height: calc(90vh - 60px); /* Dejar espacio para el caption */
+            object-fit: contain; 
+            border-radius: 8px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); 
+        }
+        .modal-caption {
+            color: #f0f0f0;
+            margin-top: 1rem;
+            padding: 0 1rem;
+            max-width: 70ch;
+            text-align: center;
+            font-size: 1rem;
+            line-height: 1.5;
+            display: none; /* Oculto por defecto */
+        }
+        .modal-caption:not(:empty) {
+            display: block; /* Visible solo si tiene texto */
+        }
+        /* --- FIN: ESTILOS MODAL MEJORADOS --- */
 
         /* --- Responsivo --- */
         @media screen and (max-width: 991px) {
@@ -747,7 +780,10 @@
     <a href="#hero" class="back-to-top" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
 
     <div class="modal-overlay">
-        <div class="modal-content"><img src="" alt="Vista ampliada"></div>
+        <div class="modal-content">
+            <img src="" alt="Vista ampliada">
+            <p class="modal-caption"></p>
+        </div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -840,9 +876,11 @@
             // --- INICIO: LÓGICA UNIFICADA PARA EL MODAL ---
             const modalOverlay = document.querySelector('.modal-overlay');
             const modalImage = modalOverlay.querySelector('.modal-content img');
+            const modalCaption = modalOverlay.querySelector('.modal-caption');
 
-            function openModal(imageSrc) {
+            function openModal(imageSrc, description = '') {
                 modalImage.src = imageSrc;
+                modalCaption.textContent = description;
                 modalOverlay.classList.add('active');
                 document.body.classList.add('modal-open');
             }
@@ -856,7 +894,7 @@
             document.querySelectorAll('.certificate-card').forEach(card => {
                 card.addEventListener('click', () => {
                     const imageSrc = card.querySelector('img').src;
-                    openModal(imageSrc);
+                    openModal(imageSrc); // No se pasa descripción
                 });
             });
 
@@ -865,7 +903,7 @@
             });
             // --- FIN: LÓGICA UNIFICADA PARA EL MODAL ---
 
-            // --- INICIO: SCRIPT DEL CARRUSEL DE PROYECTOS (LEE DESDE HTML) ---
+            // --- INICIO: SCRIPT DEL CARRUSEL DE PROYECTOS ---
             document.querySelectorAll('.project-card').forEach(card => {
                 const carouselContainer = card.querySelector('.carousel-container');
                 const imageDataSource = card.querySelector('.carousel-image-data');
@@ -894,8 +932,8 @@
                         <div class="slide-overlay"><p class="slide-description">${data.description}</p></div>`;
                     
                     slide.addEventListener('click', (e) => {
-                         if (e.target.classList.contains('carousel-arrow')) return;
-                         openModal(data.src);
+                         if (e.target.closest('.carousel-arrow')) return;
+                         openModal(data.src, data.description);
                     });
 
                     carouselContainer.appendChild(slide);
