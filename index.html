@@ -697,6 +697,7 @@
                         <div class="carousel-container"></div>
                     </div>
                     <div class="carousel-image-data" style="display: none;">
+                        <div data-src="proyectos/STTVAR/logo.png" data-description="Logo de STTVAR"></div>
                         <div data-src="proyectos/STTVAR/sistemagrabacion.png" data-description="Interfaz del sistema de grabación en tiempo real"></div>
                         <div data-src="proyectos/STTVAR/sistemafuncionando.png" data-description="Vista del sistema funcionando con transcripción activa"></div>
                         <div data-src="proyectos/STTVAR/opcionesistema.png" data-description="Panel de opciones y configuraciones del sistema"></div>
@@ -722,6 +723,7 @@
                         <div class="carousel-container"></div>
                     </div>
                     <div class="carousel-image-data" style="display: none;">
+                        <div data-src="proyectos/pishigames/logoposhi.png" data-description="Logo de PishiGames"></div>
                         <div data-src="proyectos/pishigames/paginaprincipal.png" data-description="Página principal de la tienda PishiGames v2 con vista general de los productos."></div>
                         <div data-src="proyectos/pishigames/tienda.png" data-description="Sección de la tienda mostrando los artículos disponibles para comprar."></div>
                         <div data-src="proyectos/pishigames/carrito.png" data-description="Vista del carrito de compras con productos añadidos por el usuario."></div>
@@ -748,6 +750,7 @@
                         <div class="carousel-container"></div>
                     </div>
                     <div class="carousel-image-data" style="display: none;">
+                        <div data-src="proyectos/deepsoffortune/logo.png" data-description="Logo de Depths of Fortune"></div>
                         <div data-src="proyectos/deepsoffortune/menuinicio.png" data-description="Pantalla de inicio del juego Deeps of Fortune con el menú principal."></div>
                         <div data-src="proyectos/deepsoffortune/sistemajuego.png" data-description="Vista del sistema de juego en acción mostrando la jugabilidad."></div>
                         <div data-src="proyectos/deepsoffortune/obstaculosyataque.png" data-description="Sección del juego con obstáculos y sistema de ataque del personaje."></div>
@@ -772,6 +775,7 @@
                         <div class="carousel-container"></div>
                     </div>
                     <div class="carousel-image-data" style="display: none;">
+                        <div data-src="proyectos/streetart/logo.png" data-description="Logo de Street Art"></div>
                         <div data-src="proyectos/streetart/indexconlogin.png" data-description="Pantalla inicial con login para acceder al sistema StreetArt."></div>
                         <div data-src="proyectos/streetart/inicioyregistro.png" data-description="Formulario de inicio de sesión y registro de nuevos usuarios."></div>
                         <div data-src="proyectos/streetart/registrousuarios.png" data-description="Vista del registro de usuarios dentro de la aplicación."></div>
@@ -799,6 +803,7 @@
                         <div class="carousel-container"></div>
                     </div>
                      <div class="carousel-image-data" style="display: none;">
+                         <div data-src="proyectos/softbrain/logosoft.png" data-description="Logo de Soft-Brain"></div>
                          <div data-src="proyectos/softbrain/index.png" data-description="Vista Pagina Principal"></div>
                          <div data-src="proyectos/softbrain/formulario.png" data-description="Formulario de Contactos"></div>
                          <div data-src="proyectos/softbrain/preguntas.png" data-description="Chat Desplegable con Preguntas Pre-Definidas"></div>
@@ -1176,9 +1181,9 @@
                 
                 let currentIndex = 0;
                 let autoSlideInterval;
+                let hasInteracted = false; // <<< [NUEVO] Flag para cada carrusel
                 carouselContainer.innerHTML = ''; 
 
-                // Crea los slides y los añade al contenedor
                 imageData.forEach((data, index) => {
                     const slide = document.createElement('div');
                     slide.className = 'carousel-slide';
@@ -1187,17 +1192,15 @@
                         <div class="carousel-image" style="background-image: url('${data.src}')"></div>
                         <div class="slide-overlay"><p class="slide-description">${data.description}</p></div>`;
                     
-                    // Listener modificado para abrir el modal con la galería completa
                     slide.addEventListener('click', (e) => {
                          if (e.target.closest('.carousel-arrow')) return;
-                         openModal(imageData, index); // <-- ¡AQUÍ ESTÁ LA MODIFICACIÓN CLAVE!
+                         openModal(imageData, index);
                     });
                     carouselContainer.appendChild(slide);
                 });
                 
                 const slides = carouselContainer.querySelectorAll('.carousel-slide');
                 
-                // Función para mostrar un slide específico y actualizar los puntos
                 const showSlide = (index) => {
                     slides.forEach((s, i) => s.classList.toggle('active', i === index));
                     if (dotsContainer) {
@@ -1210,24 +1213,28 @@
                     showSlide(currentIndex);
                 };
 
-                // Iniciar/Reiniciar el deslizamiento automático
                 const startAutoSlide = () => {
                     if (imageData.length <= 1) return;
-                    stopAutoSlide(); // Limpia cualquier intervalo anterior
+                    stopAutoSlide();
                     autoSlideInterval = setInterval(nextSlide, 5000);
                 };
 
                 const stopAutoSlide = () => clearInterval(autoSlideInterval);
                 
-                const resetAutoSlide = () => {
-                    stopAutoSlide();
-                    setTimeout(startAutoSlide, 5000); // Espera 5 segundos antes de reanudar
+                // <<< [NUEVO] Lógica para manejar la interacción del usuario
+                const handleInteraction = () => {
+                    if (!hasInteracted) {
+                        hasInteracted = true;
+                        startAutoSlide(); // Inicia el auto-slide solo en la primera interacción
+                    } else {
+                        // Para interacciones posteriores, simplemente resetea el temporizador
+                        stopAutoSlide();
+                        setTimeout(startAutoSlide, 5000);
+                    }
                 };
 
-                // Si hay más de una imagen, añade controles (flechas y puntos)
                 let dotsContainer;
                 if (imageData.length > 1) {
-                    // Flechas
                     const prevArrow = document.createElement('button');
                     prevArrow.className = 'carousel-arrow prev'; prevArrow.innerHTML = '<i class="fas fa-chevron-left"></i>';
                     
@@ -1236,44 +1243,57 @@
 
                     carouselContainer.append(prevArrow, nextArrow);
 
-                    nextArrow.addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); resetAutoSlide(); });
-                    prevArrow.addEventListener('click', (e) => { e.stopPropagation(); currentIndex = (currentIndex - 1 + imageData.length) % imageData.length; showSlide(currentIndex); resetAutoSlide(); });
+                    // <<< [MODIFICADO] Llama a handleInteraction en los clics
+                    nextArrow.addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); handleInteraction(); });
+                    prevArrow.addEventListener('click', (e) => { e.stopPropagation(); currentIndex = (currentIndex - 1 + imageData.length) % imageData.length; showSlide(currentIndex); handleInteraction(); });
                     
-                    // Puntos indicadores
                     dotsContainer = document.createElement('div');
                     dotsContainer.className = 'carousel-dots';
                     imageData.forEach((_, index) => {
                         const dot = document.createElement('span');
                         dot.className = 'dot';
                         if(index === 0) dot.classList.add('active');
-                        dot.addEventListener('click', () => { showSlide(index); resetAutoSlide(); });
+                        // <<< [MODIFICADO] Llama a handleInteraction en los clics
+                        dot.addEventListener('click', () => { showSlide(index); handleInteraction(); });
                         dotsContainer.appendChild(dot);
                     });
-                    carouselWrapper.appendChild(dotsContainer); // Añade los puntos al wrapper
+                    carouselWrapper.appendChild(dotsContainer);
 
-                    // Iniciar carrusel automático
-                    startAutoSlide();
                     carouselContainer.addEventListener('mouseenter', stopAutoSlide);
-                    carouselContainer.addEventListener('mouseleave', startAutoSlide);
+                    // <<< [MODIFICADO] Solo reanuda si ya se ha interactuado
+                    carouselContainer.addEventListener('mouseleave', () => {
+                        if (hasInteracted) {
+                            startAutoSlide();
+                        }
+                    });
 
-                    // Lógica para deslizar (Swipe)
                     let touchStartX = 0;
                     carouselContainer.addEventListener('touchstart', (e) => {
                         touchStartX = e.touches[0].clientX;
-                        stopAutoSlide(); // Pausa al empezar a tocar
+                        stopAutoSlide();
                     });
 
+                    // <<< [MODIFICADO] Llama a handleInteraction al deslizar
                     carouselContainer.addEventListener('touchend', (e) => {
                         let touchEndX = e.changedTouches[0].clientX;
-                        let swipeThreshold = 50; // Mínimo de píxeles para considerar un swipe
+                        let swipeThreshold = 50; 
+                        let swiped = false;
 
-                        if (touchStartX - touchEndX > swipeThreshold) { // Swipe a la izquierda
+                        if (touchStartX - touchEndX > swipeThreshold) {
                             nextSlide();
-                        } else if (touchEndX - touchStartX > swipeThreshold) { // Swipe a la derecha
+                            swiped = true;
+                        } else if (touchEndX - touchStartX > swipeThreshold) {
                             currentIndex = (currentIndex - 1 + imageData.length) % imageData.length;
                             showSlide(currentIndex);
+                            swiped = true;
                         }
-                        resetAutoSlide(); // Reanuda el auto slide después de la interacción
+                        
+                        if(swiped) {
+                           handleInteraction();
+                        } else if (hasInteracted) {
+                           // Si no hubo swipe pero el carrusel ya estaba activo, lo reanudamos
+                           startAutoSlide();
+                        }
                     });
                 }
             });
