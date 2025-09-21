@@ -215,7 +215,8 @@
         .tech-tags span i { font-size: 1.2em; }
         .tech-tags span:hover { transform: translateY(-3px); background-color: var(--accent-color-transparent); border-color: var(--accent-color); color: var(--light-color); box-shadow: 0 4px 12px rgba(0, 255, 204, 0.2); }
         .project-buttons { margin-top: auto; }
-        .project-buttons .btn { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--light-color); background-color: transparent; border: 2px solid var(--accent-color); padding: 0.6rem 1.2rem; text-decoration: none; border-radius: 5px; margin-right: 0.5rem; transition: all 0.3s ease; font-weight: 600; }
+        .project-buttons .btn { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--light-color); background-color: transparent; border: 2px solid var(--accent-color); padding: 0.3rem 0.8rem
+; text-decoration: none; border-radius: 5px; margin-right: 0.5rem; transition: all 0.3s ease; font-weight: 600; }
         .project-buttons .btn:hover { background-color: var(--accent-color); color: var(--bg-light-dark); box-shadow: 0 0 15px var(--accent-color); }
 
         /* --- INICIO: ESTILOS PARA EL CARRUSEL --- */
@@ -644,42 +645,48 @@
             <a href="#sobre-mi" class="scroll-down" aria-label="Scroll a sobre mí"><i class="fas fa-chevron-down"></i></a>
         </section>
 
-        <section id="sobre-mi">
-            <h2 data-aos="fade-up">Sobre Mí</h2>
-            <div class="about-container">
-                <div class="about-text" data-aos="fade-right">
-                    <p>
-                        Hola de nuevo. Soy Lucas, un apasionado por la tecnología que encuentra en la programación el puente perfecto entre la lógica y la creatividad. Para mí, programar no es solo escribir líneas de código; es <span class="highlight">esculpir soluciones</span>, resolver puzles y, en última instancia, construir algo que funcione y que sea bello a la vez.
-                    </p>
-                    <p>
-                        Mi filosofía se basa en la <span class="highlight">mejora continua</span> y el aprendizaje constante. Me encanta sumergirme en nuevas tecnologías y descubrir formas más eficientes de hacer las cosas. Creo firmemente que las mejores soluciones nacen de la colaboración y la comunicación.
-                    </p>
-                    <p>
-                        Cuando no estoy frente a la pantalla, probablemente me encuentres explorando mundos virtuales en algún videojuego, buscando la toma perfecta con mi cámara o disfrutando de una buena película de ciencia ficción. Estas pasiones alimentan mi creatividad y me inspiran a pensar fuera de la caja.
-                    </p>
-                </div>
-                <div class="about-visual" data-aos="fade-left" data-aos-delay="200">
-                    <img src="https://avatars.githubusercontent.com/u/125527408?v=4" alt="Foto personal de Lucas Jiménez" class="about-pic" loading="lazy">
-                    <div class="about-hobbies">
-                        <h4>Intereses</h4>
-                        <div class="hobbies-grid">
-                            <div class="hobby-item">
-                                <i class="fas fa-gamepad"></i>
-                                <span>Gaming</span>
-                            </div>
-                            <div class="hobby-item">
-                                <i class="fas fa-code"></i>
-                                <span>Programación</span>
-                            </div>
-                            <div class="hobby-item">
-                                <i class="fas fa-film"></i>
-                                <span>Cine</span>
-                            </div>
-                        </div>
+     <section id="sobre-mi">
+    <h2 data-aos="fade-up">Sobre Mí</h2>
+    <div class="about-container">
+        <div class="about-text" data-aos="fade-right">
+            <p>
+                Hola, soy <span class="highlight">Lucas</span>. Me gusta la <span class="highlight">tecnología</span> y disfruto la <span class="highlight">programación</span> porque combina lógica con creatividad. Para mí, programar es encontrar <span class="highlight">soluciones prácticas</span> y dar forma a ideas que funcionan.
+            </p>
+            <p>
+                Me gusta aprender siempre <span class="highlight">cosas nuevas</span> y buscar formas más <span class="highlight">eficientes</span> de trabajar. Creo que las mejores ideas nacen cuando se comparten y se construyen en equipo.
+            </p>
+            <p>
+                Fuera de la programación, paso tiempo jugando <span class="highlight">videojuegos</span>, entrenando en el <span class="highlight">gimnasio</span> o viendo <span class="highlight">películas de ciencia ficción</span>. Son hobbies que me inspiran y me ayudan a pensar diferente.
+            </p>
+        </div>
+        <div class="about-visual" data-aos="fade-left" data-aos-delay="200">
+            <img src="https://avatars.githubusercontent.com/u/125527408?v=4" alt="Foto personal de Lucas Jiménez" class="about-pic" loading="lazy">
+            <div class="about-hobbies">
+                <h4>Intereses</h4>
+                <div class="hobbies-grid">
+                    <div class="hobby-item">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Gaming</span>
+                    </div>
+                    <div class="hobby-item">
+                        <i class="fas fa-code"></i>
+                        <span>Programación</span>
+                    </div>
+                    <div class="hobby-item">
+                        <i class="fas fa-dumbbell"></i>
+                        <span>Gimnasio</span>
+                    </div>
+                    <div class="hobby-item">
+                        <i class="fas fa-film"></i>
+                        <span>Cine</span>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
+
+
 
         <section id="proyectos">
             <h2 data-aos="fade-up">Mis Proyectos</h2>
@@ -702,7 +709,10 @@
                         <h3>STTVAR</h3>
                         <p>Herramienta de transcripción, análisis y gestión de voz/audio en tiempo real con IA.</p>
                         <div class="tech-tags"><span><i class="devicon-python-plain colored"></i>Python</span><span><i class="devicon-html5-plain colored"></i>HTML</span><span>PyQt5</span></div>
-                        <div class="project-buttons"><a href="https://github.com/LucasJS28/STTVAR" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+                        <div class="project-buttons">
+                            <a href="https://github.com/LucasJS28/STTVAR" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                            <!-- <a href="#" class="btn" target="_blank"><i class="fas fa-external-link-alt"></i> Demo</a>  -->
+                        </div>
                     </div>
                 </div>
                 
@@ -725,7 +735,10 @@
                         <h3>PishiGames v2</h3>
                         <p>Tienda online simulada con gestión de usuarios, inventario, carrito y administradores.</p>
                         <div class="tech-tags"><span><i class="devicon-php-plain colored"></i>PHP</span><span><i class="devicon-javascript-plain colored"></i>JS</span><span><i class="devicon-css3-plain colored"></i>CSS</span><span>AJAX</span></div>
-                        <div class="project-buttons"><a href="https://github.com/LucasJS28/PishiGamesv2" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+                        <div class="project-buttons">
+                            <a href="https://github.com/LucasJS28/PishiGamesv2" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                            <!-- <a href="#" class="btn" target="_blank"><i class="fas fa-external-link-alt"></i> Demo</a>  -->
+                        </div>
                     </div>
                 </div>
 
@@ -746,7 +759,10 @@
                         <h3>Depths of Fortune</h3>
                         <p>Juego 2D en Unity sobre buscar objetos en un tiempo determinado, evitando obstáculos.</p>
                          <div class="tech-tags"><span><i class="devicon-csharp-plain colored"></i>C#</span><span><i class="devicon-unity-original colored"></i>Unity</span></div>
-                        <div class="project-buttons"><a href="https://github.com/LucasJS28/Depths-of-fortune" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+                        <div class="project-buttons">
+                            <a href="https://github.com/LucasJS28/Depths-of-fortune" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                            <!-- <a href="#" class="btn" target="_blank"><i class="fas fa-external-link-alt"></i> Demo</a>  -->
+                        </div>
                     </div>
                 </div>
 
@@ -756,14 +772,24 @@
                         <div class="carousel-container"></div>
                     </div>
                     <div class="carousel-image-data" style="display: none;">
-                       <div data-src="https://images.pexels.com/photos/160846/french-bulldog-summer-smile-joy-160846.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" data-description="Landing page principal de Soft-Brain."></div>
-
+                        <div data-src="proyectos/streetart/indexconlogin.png" data-description="Pantalla inicial con login para acceder al sistema StreetArt."></div>
+                        <div data-src="proyectos/streetart/inicioyregistro.png" data-description="Formulario de inicio de sesión y registro de nuevos usuarios."></div>
+                        <div data-src="proyectos/streetart/registrousuarios.png" data-description="Vista del registro de usuarios dentro de la aplicación."></div>
+                        <div data-src="proyectos/streetart/gestionusuarios.png" data-description="Módulo de gestión de usuarios con opciones de administración."></div>
+                        <div data-src="proyectos/streetart/menuadmin.png" data-description="Menú de administración con accesos a las diferentes funciones del sistema."></div>
+                        <div data-src="proyectos/streetart/crudubicaciones.png" data-description="Interfaz CRUD para la gestión de ubicaciones de arte urbano."></div>
+                        <div data-src="proyectos/streetart/verubicacionesdesdeusuario.png" data-description="Mapa o vista de ubicaciones registradas accesibles para el usuario."></div>
+                        <div data-src="proyectos/streetart/gestordeopiniones.png" data-description="Sección de opiniones y comentarios de los usuarios sobre las ubicaciones."></div>
+                        <div data-src="proyectos/streetart/encuentasatisfaccino.png" data-description="Encuesta de satisfacción de usuarios respecto a la aplicación."></div>
                     </div>
                     <div class="project-content">
                         <h3>Street Art</h3>
                         <p>App Android con mapa interactivo para agregar y gestionar lugares para visitar en Talca.</p>
                         <div class="tech-tags"><span><i class="devicon-java-plain colored"></i>Java</span><span><i class="devicon-android-plain colored"></i>Android Studio</span></div>
-                        <div class="project-buttons"><a href="https://github.com/LucasJS28/Street-Art" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+                        <div class="project-buttons">
+                            <a href="https://github.com/LucasJS28/Street-Art" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                            <!-- <a href="#" class="btn" target="_blank"><i class="fas fa-external-link-alt"></i> Demo</a>  -->
+                        </div>
                     </div>
                 </div>
 
@@ -782,7 +808,10 @@
                         <h3>Soft-Brain</h3>
                         <p>Página web para presentar un emprendimiento universitario, con envío de CV vía Formspree.</p>
                         <div class="tech-tags"><span><i class="devicon-html5-plain colored"></i>HTML</span><span><i class="devicon-css3-plain colored"></i>CSS</span><span><i class="devicon-javascript-plain colored"></i>JavaScript</span></div>
-                        <div class="project-buttons"><a href="https://github.com/LucasJS28/Soft-brain" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+                        <div class="project-buttons">
+                            <a href="https://github.com/LucasJS28/Soft-brain" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="https://lucasjs28.github.io/Soft-brain" class="btn" target="_blank"><i class="fas fa-external-link-alt"></i> Demo</a>
+                        </div>
                     </div>
                 </div>
             </div>
